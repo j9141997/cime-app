@@ -10,7 +10,13 @@ const Layout: FC<Props> = ({ children }) => {
   return (
     <div>
       <Header />
-      <Box as="main" minHeight="calc(100vh - 88px)">
+      <Box
+        as="main"
+        minH="calc(100vh - 88px)"
+        maxW={1200}
+        marginTop="4.5rem"
+        marginX="1.5rem"
+      >
         {children}
       </Box>
       <Footer />

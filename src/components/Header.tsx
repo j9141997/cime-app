@@ -1,11 +1,15 @@
 import React, { VFC } from 'react'
 import NextLink from 'next/link'
-import { Box, Flex, Heading, Button } from '@chakra-ui/react'
+import { Box, Flex, Heading, Button, useColorMode } from '@chakra-ui/react'
 import routes from 'routes'
+import Icon from '@components/common/Icon'
 
 export const Header: VFC = () => {
+  const { colorMode, toggleColorMode } = useColorMode()
+  console.log(colorMode, toggleColorMode)
+
   return (
-    <Box as="header" pos="fixed" width="100%">
+    <Box as="header" pos="fixed" width="100%" top={0}>
       <Flex
         maxW={1200}
         height="4.5rem"
@@ -20,9 +24,12 @@ export const Header: VFC = () => {
           </Heading>
         </NextLink>
         <Box>
-          {/* <Button>よしあ</Button> */}
-          <Button marginRight="0.5rem">ログイン</Button>
-          <Button>新規登録</Button>
+          <Button type="button" marginRight="0.5rem" onClick={toggleColorMode}>
+            <Icon name={colorMode === 'light' ? 'SunIcon' : 'MoonIcon'} />
+          </Button>
+          <NextLink href={routes.login}>
+            <Button type="button">Login</Button>
+          </NextLink>
         </Box>
       </Flex>
     </Box>

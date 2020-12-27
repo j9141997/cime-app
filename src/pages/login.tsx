@@ -1,18 +1,18 @@
 import React from 'react'
 import { NextPage } from 'next'
 import Head from 'next/head'
-import Panel from '@components/common/Panel'
+import LoginFormContainer from '@components/LoginFormContainer'
 
-const HomePage: NextPage = () => {
+const LoginPage: NextPage = () => {
   return (
     <div>
       <Head>
-        <title>Create yoshida App</title>
+        <title>Cime/Login</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      {/* <Panel /> */}
+      <LoginFormContainer />
     </div>
   )
 }
 
-export default HomePage
+export default LoginPage
