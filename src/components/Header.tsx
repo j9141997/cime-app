@@ -6,8 +6,6 @@ import Icon from '@components/common/Icon'
 
 export const Header: VFC = () => {
   const { colorMode, toggleColorMode } = useColorMode()
-  console.log(colorMode, toggleColorMode)
-
   return (
     <Box as="header" pos="fixed" width="100%" top={0}>
       <Flex
@@ -27,9 +25,7 @@ export const Header: VFC = () => {
           <Button type="button" marginRight="0.5rem" onClick={toggleColorMode}>
             <Icon name={colorMode === 'light' ? 'SunIcon' : 'MoonIcon'} />
           </Button>
-          <NextLink href={routes.login}>
-            <Button type="button">Login</Button>
-          </NextLink>
+          <Button>New</Button>
         </Box>
       </Flex>
     </Box>

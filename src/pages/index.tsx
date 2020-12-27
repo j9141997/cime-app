@@ -1,16 +1,33 @@
 import React from 'react'
-import { NextPage } from 'next'
+import { NextPage, GetServerSideProps } from 'next'
 import Head from 'next/head'
-import Panel from '@components/common/Panel'
+import useSWR from 'swr'
+import OptionInteractor from 'src/interactors/options/OptionInteractor'
+import { Option } from 'src/interactors/options/OptionMapper'
 
-const HomePage: NextPage = () => {
+type Props = {
+  options: Option[]
+}
+
+export const getServerSideProps: GetServerSideProps = async () => {
+  const options = await new OptionInteractor().findAll()
+  return {
+    props: {
+      options,
+    },
+  }
+}
+
+const HomePage: NextPage<Props> = ({ options = [] }) => {
   return (
     <div>
       <Head>
         <title>Create yoshida App</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      {/* <Panel /> */}
+      {options.map((option) => (
+        <h1>{option.title}</h1>
+      ))}
     </div>
   )
 }
