@@ -1,13 +1,21 @@
 import React, { VFC } from 'react'
 import NextLink from 'next/link'
-import { Box, Flex, Heading, Button, useColorMode } from '@chakra-ui/react'
+import {
+  Box,
+  Flex,
+  Heading,
+  Button,
+  useColorMode,
+  useColorModeValue,
+} from '@chakra-ui/react'
 import routes from 'routes'
 import Icon from '@components/common/Icon'
 
 export const Header: VFC = () => {
   const { colorMode, toggleColorMode } = useColorMode()
+  const bg = useColorModeValue('white', 'gray.800')
   return (
-    <Box as="header" pos="fixed" width="100%" top={0}>
+    <Box as="header" pos="fixed" width="100%" top={0} zIndex={1} bg={bg}>
       <Flex
         maxW={1200}
         height="4.5rem"

@@ -1,3 +1,5 @@
-export const env = {
-  API_BASE_ENDPOINT: process.env.API_BASE_ENDPOINT,
+module.exports = {
+  env: {
+    API_BASE_ENDPOINT: process.env.NEXT_PUBLIC_API_ENDOPOINT,
+  },
 }
