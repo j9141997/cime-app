@@ -2,5 +2,8 @@ export default {
   root: '/',
   login: '/login',
   signup: '/signup',
-  option: (optionId: string): string => `/options/${optionId}`,
+  options: {
+    new: '/options/new',
+    show: (optionId: string): string => `/options/${optionId}`,
+  },
 }
