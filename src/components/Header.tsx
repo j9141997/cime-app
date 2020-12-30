@@ -15,7 +15,15 @@ export const Header: VFC = () => {
   const { colorMode, toggleColorMode } = useColorMode()
   const bg = useColorModeValue('white', 'gray.800')
   return (
-    <Box as="header" pos="fixed" width="100%" top={0} zIndex={1} bg={bg}>
+    <Box
+      as="header"
+      pos="fixed"
+      width="100%"
+      top={0}
+      zIndex={1}
+      bg={bg}
+      shadow="sm"
+    >
       <Flex
         maxW={1200}
         height="4.5rem"

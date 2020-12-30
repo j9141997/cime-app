@@ -28,6 +28,7 @@ const HomePage: NextPage<Props> = ({ options = [] }) => {
     () => new OptionInteractor().findAll(),
     { initialData }
   )
+  console.log(data)
   return (
     <div>
       <Head>
@@ -36,7 +37,7 @@ const HomePage: NextPage<Props> = ({ options = [] }) => {
       </Head>
       <Flex justify="space-between" css={{ flexWrap: 'wrap' }}>
         {options.map((option, i) => (
-          <Card key={`option-${i}`} title={option.title} />
+          <Card key={`option-${i}`} data={option} />
         ))}
       </Flex>
     </div>
