@@ -8,7 +8,7 @@ class OptionInteractor {
   readonly baseURL: string
 
   constructor() {
-    this.baseURL = process.env.API_BASE_ENDPOINT
+    this.baseURL = process.env.NEXT_PUBLIC_API_ENDOPOINT
   }
 
   findAll = async (): Promise<Option[] | null> => {
