@@ -1,6 +1,7 @@
 import React from 'react'
 import { NextPage, GetServerSideProps } from 'next'
 import useSWR from 'swr'
+import { Container } from '@chakra-ui/react'
 import baseURL from 'src/utils/baseURL'
 import OptionInteractor from 'src/interactors/options/OptionInteractor'
 import { Option } from 'src/interactors/options/OptionMapper'
@@ -27,10 +28,10 @@ const OptionPage: NextPage<Props> = ({ option }) => {
     { initialData }
   )
   return (
-    <div>
+    <Container>
       <h1>{data.title}</h1>
       <p>{data.id}</p>
-    </div>
+    </Container>
   )
 }
 

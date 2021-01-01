@@ -1,25 +1,18 @@
 import React from 'react'
 import { NextPage } from 'next'
 import Head from 'next/head'
-import { Box, FormControl, FormLabel, Input } from '@chakra-ui/react'
-import Form from '@components/common/Form'
+import { Container } from '@chakra-ui/react'
+import { OptionForm } from '@components/optionForm'
 
 const NewPage: NextPage = () => {
   return (
-    <div>
+    <Container py={4}>
       <Head>
-        <title>Create yoshida App</title>
+        <title>投稿</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Box>
-        <Form>
-          <FormControl id="title">
-            <FormLabel>Title</FormLabel>
-            <Input type="text" name="title" />
-          </FormControl>
-        </Form>
-      </Box>
-    </div>
+      <OptionForm />
+    </Container>
   )
 }
 

@@ -46,7 +46,7 @@ class OptionInteractor {
     }
   }
 
-  post = async (params: any): Promise<any | null> => {
+  post = async <T>(params: T): Promise<any | null> => {
     const res = await fetch(`${this.baseURL}/options`, {
       method: 'POST',
       headers: {
