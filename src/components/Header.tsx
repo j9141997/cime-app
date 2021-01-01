@@ -32,16 +32,20 @@ export const Header: VFC = () => {
         justify="space-between"
         paddingX="1rem"
       >
-        <NextLink href={routes.root}>
-          <Heading as="h1" size="lg" letterSpacing={'-.1rem'}>
-            Cime
-          </Heading>
+        <NextLink href={routes.root} passHref>
+          <a aria-label="Cime, Back to homepage">
+            <Heading as="h1" size="lg" letterSpacing={'-.1rem'}>
+              Cime
+            </Heading>
+          </a>
         </NextLink>
         <Box>
           <Button type="button" marginRight="0.5rem" onClick={toggleColorMode}>
             <Icon name={colorMode === 'light' ? 'SunIcon' : 'MoonIcon'} />
           </Button>
-          <Button>New</Button>
+          <NextLink href={routes.options.new} passHref>
+            <Button>New</Button>
+          </NextLink>
         </Box>
       </Flex>
     </Box>
