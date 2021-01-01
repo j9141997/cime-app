@@ -5,5 +5,6 @@ export default {
   options: {
     new: '/options/new',
     show: (optionId: string): string => `/options/${optionId}`,
+    edit: (optionId: string): string => `/options/${optionId}/edit`,
   },
 }
