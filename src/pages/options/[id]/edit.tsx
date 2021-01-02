@@ -1,12 +1,13 @@
 import React from 'react'
-import { NextPage, GetServerSideProps } from 'next'
-import NextLink from 'next/link'
+import { GetServerSideProps, NextPage } from 'next'
+import { NextSeo } from 'next-seo'
 import useSWR from 'swr'
 import baseURL from 'src/utils/baseURL'
+import Container from 'src/common/Container'
+import { OptionForm } from '@components/optionForm'
 import OptionInteractor from 'src/interactors/options/OptionInteractor'
 import { Option } from 'src/interactors/options/OptionMapper'
 import routes from 'routes'
-import Container from 'src/common/Container'
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   const id = params?.id as string
@@ -22,20 +23,23 @@ type Props = {
   option: Option
 }
 
-const OptionPage: NextPage<Props> = ({ option }) => {
+const EditPage: NextPage<Props> = ({ option }) => {
   const initialData = option
   const { data, error } = useSWR<Option | null>(
     `${baseURL}/option/${option.id}`,
     () => new OptionInteractor().findOne(option.id),
     { initialData }
   )
+  const breadcrumb = [
+    { title: 'HOME', href: routes.root },
+    { title: '編集', href: routes.options.new },
+  ]
   return (
-    <Container>
-      <NextLink href={routes.options.edit(data.id)}>編集</NextLink>
-      <h1>{data.title}</h1>
-      <p>{data.id}</p>
+    <Container breadcrumb={breadcrumb}>
+      <NextSeo title="編集" />
+      <OptionForm params={data} />
     </Container>
   )
 }
 
-export default OptionPage
+export default EditPage
