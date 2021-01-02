@@ -1,2 +1,4 @@
 myApp:
   component: '@sls-next/serverless-component@1.18.0'
+  env:
+    NEXT_PUBLIC_API_ENDOPOINT: 'https://08hv1az2xg.execute-api.us-east-1.amazonaws.com/dev'

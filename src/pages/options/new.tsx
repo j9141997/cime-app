@@ -1,5 +1,5 @@
 import React from 'react'
-import { NextPage, GetStaticProps } from 'next'
+import { NextPage } from 'next'
 import { NextSeo } from 'next-seo'
 import Container from 'src/common/Container'
 import { OptionForm } from '@components/optionForm'

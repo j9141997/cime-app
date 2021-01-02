@@ -16,6 +16,8 @@ import routes from 'routes'
 
 type ContainerProps = {
   params?: {
+    id: string
+    title: string
     merits?: string[]
     demerits?: string[]
   }
@@ -30,8 +32,7 @@ type Props = {
     demerits: number[]
   }
   submitting: boolean
-}
-
+} & ContainerProps
 // for Web Designer
 const Component: VFC<Props> = ({
   onClickAddField,
@@ -39,6 +40,7 @@ const Component: VFC<Props> = ({
   onSubmit,
   indexes,
   submitting,
+  params = {},
 }) => (
   <Form submitting={submitting} onSubmit={onSubmit}>
     <VStack spacing={4}>
@@ -48,6 +50,7 @@ const Component: VFC<Props> = ({
           type="text"
           variant="unstyled"
           name="title"
+          defaultValue={params.title}
           placeholder="Title..."
           size="lg"
           autoFocus={true}
@@ -110,12 +113,12 @@ const Container: VFC<ContainerProps> = ({ params }) => {
   const router = useRouter()
   const [submitting, setSubmitting] = useState(false)
   const [indexes, setIndexes] = useState({
-    merits: params.merits.length ? params.merits.map((_, i) => i) : [0],
-    demerits: params.demerits.length ? params.demerits.map((_, i) => i) : [0],
+    merits: params.merits?.length ? params.merits.map((_, i) => i) : [0],
+    demerits: params.demerits?.length ? params.demerits.map((_, i) => i) : [0],
   })
   const [counter, setCounter] = useState({
-    merits: params.merits.length || 1,
-    demerits: params.demerits.length || 1,
+    merits: params.merits?.length || 1,
+    demerits: params.demerits?.length || 1,
   })
 
   const handleAddField: ComponentProps<
@@ -184,12 +187,15 @@ const Container: VFC<ContainerProps> = ({ params }) => {
       onSubmit={handleSubmit}
       indexes={indexes}
       submitting={submitting}
+      params={params}
     />
   )
 }
 
 Container.defaultProps = {
   params: {
+    id: '',
+    title: '',
     merits: [],
     demerits: [],
   },
