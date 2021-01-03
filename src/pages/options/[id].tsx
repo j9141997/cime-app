@@ -29,9 +29,11 @@ const OptionPage: NextPage<Props> = ({ option }) => {
     () => new OptionInteractor().findOne(option?.id),
     { initialData }
   )
+
   return (
     <Container>
       <NextLink href={routes.options.edit(data.id)}>編集</NextLink>
+      <NextLink href={routes.options.edit(data.id)}>削除</NextLink>
       <h1>{data.title}</h1>
       <p>{data.id}</p>
     </Container>

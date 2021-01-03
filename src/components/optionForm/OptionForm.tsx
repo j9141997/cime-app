@@ -11,16 +11,13 @@ import {
 } from '@chakra-ui/react'
 import Form from '@components/common/Form'
 import OptionInteractor from 'src/interactors/options/OptionInteractor'
+import { Option } from 'src/interactors/options/OptionMapper'
 import { Input } from '@components/common'
 import routes from 'routes'
 
 type ContainerProps = {
-  params?: {
-    id: string
-    title: string
-    merits?: string[]
-    demerits?: string[]
-  }
+  params?: Option
+  method: 'POST' | 'PUT'
 }
 
 type Props = {
@@ -32,7 +29,7 @@ type Props = {
     demerits: number[]
   }
   submitting: boolean
-} & ContainerProps
+} & Omit<ContainerProps, 'method'>
 // for Web Designer
 const Component: VFC<Props> = ({
   onClickAddField,
@@ -108,9 +105,10 @@ const Component: VFC<Props> = ({
 )
 
 // for Frontend Developer
-const Container: VFC<ContainerProps> = ({ params }) => {
+const Container: VFC<ContainerProps> = ({ params, method }) => {
   const toast = useToast()
   const router = useRouter()
+  const action = method === 'POST' ? 'post' : 'update'
   const [submitting, setSubmitting] = useState(false)
   const [indexes, setIndexes] = useState({
     merits: params.merits?.length ? params.merits.map((_, i) => i) : [0],
@@ -156,7 +154,11 @@ const Container: VFC<ContainerProps> = ({ params }) => {
     async (data) => {
       setSubmitting(true)
       try {
-        await new OptionInteractor().post<Pick<ContainerProps, 'params'>>(data)
+        const result = await new OptionInteractor()[action]({
+          id: params.id,
+          ...data,
+        })
+        console.log(result)
         toast({
           position: 'bottom-left',
           title: 'Article Created!!',
@@ -177,7 +179,7 @@ const Container: VFC<ContainerProps> = ({ params }) => {
         })
       }
     },
-    [toast, router]
+    [action, toast, router]
   )
 
   return (

@@ -21,7 +21,7 @@ const Card: VFC<Props> = memo(function ItemPanel({ data }) {
     >
       <Flex align="center" px={4} pt={4}>
         <Avatar size="xs" mr={2} />
-        <Text fontSize="sm">Junki Yoshida</Text>
+        <Text fontSize="sm">Anonymous</Text>
       </Flex>
       <NextLink href={routes.options.show(data.id)}>
         <Box p={4}>

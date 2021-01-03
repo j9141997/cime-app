@@ -1,6 +1,8 @@
 export type Option = {
   id: string
   title: string
+  merits?: string[]
+  demerits?: string[]
 }
 
 class OptionMapper {

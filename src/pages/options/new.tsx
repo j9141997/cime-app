@@ -13,7 +13,7 @@ const NewPage: NextPage = () => {
   return (
     <Container breadcrumb={breadcrumb}>
       <NextSeo title="新規公開" />
-      <OptionForm />
+      <OptionForm method="POST" />
     </Container>
   )
 }

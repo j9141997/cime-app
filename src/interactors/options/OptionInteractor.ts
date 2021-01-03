@@ -1,8 +1,11 @@
 import OptionMapper, { Option } from './OptionMapper'
+import { handleErrors } from 'src/utils/handleErrors'
 
 type BodyProps = {
-  option?: Option
-  options?: Option[]
+  data: {
+    option?: Option
+    options?: Option[]
+  }
 }
 
 class OptionInteractor {
@@ -19,9 +22,13 @@ class OptionInteractor {
         'Content-Type': 'application/json',
       },
     })
+      .then((res) => res)
+      .catch((e) => {
+        throw Error(e)
+      })
     try {
       const body: BodyProps = await res.json()
-      return (body.options || []).map((option: Option) =>
+      return (body.data.options || []).map((option: Option) =>
         OptionMapper.bodyToOption(option)
       )
     } catch (e) {
@@ -39,27 +46,41 @@ class OptionInteractor {
     })
     try {
       const body: BodyProps = await res.json()
-      return OptionMapper.bodyToOption(body.option)
+      return OptionMapper.bodyToOption(body.data.option)
     } catch (e) {
       console.log(e)
       return null
     }
   }
 
-  post = async <T>(params: T): Promise<any | null> => {
-    const res = await fetch(`${this.baseURL}/options`, {
+  post = async (params: Option): Promise<any | Error> => {
+    await fetch(`${this.baseURL}/options`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(params),
     })
-    try {
-      return res
-    } catch (e) {
-      console.error(e)
-      return e
-    }
+      .catch((e) => {
+        throw Error(e)
+      })
+      .then(handleErrors)
+      .then((res) => res)
+  }
+
+  update = async ({ id, ...params }: Option): Promise<any | Error> => {
+    await fetch(`${this.baseURL}/options/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(params),
+    })
+      .catch((e) => {
+        throw Error(e)
+      })
+      .then(handleErrors)
+      .then((res) => res)
   }
 }
 
