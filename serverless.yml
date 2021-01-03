@@ -3,5 +3,5 @@ myApp:
   inputs:
     build:
       env:
-        NEXT_PUBLIC_API_ENDOPOINT: 'https://349ixeifxf.execute-api.ap-northeast-1.amazonaws.com/dev'
+        NEXT_PUBLIC_API_ENDOPOINT: ${env.NEXT_PUBLIC_API_ENDOPOINT}
     nextConfigDir: '.'
