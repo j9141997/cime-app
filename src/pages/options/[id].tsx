@@ -25,8 +25,8 @@ type Props = {
 const OptionPage: NextPage<Props> = ({ option }) => {
   const initialData = option
   const { data, error } = useSWR<Option | null>(
-    `${baseURL}/option/${option.id}`,
-    () => new OptionInteractor().findOne(option.id),
+    `${baseURL}/option/${option?.id}`,
+    () => new OptionInteractor().findOne(option?.id),
     { initialData }
   )
   return (
