@@ -37,7 +37,7 @@ const EditPage: NextPage<Props> = ({ option }) => {
   return (
     <Container breadcrumb={breadcrumb}>
       <NextSeo title="編集" />
-      <OptionForm params={data} />
+      <OptionForm params={data} method="PUT" />
     </Container>
   )
 }
