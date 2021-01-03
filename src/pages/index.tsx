@@ -28,6 +28,7 @@ const HomePage: NextPage<Props> = ({ options = [] }) => {
     () => new OptionInteractor().findAll(),
     { initialData }
   )
+
   return (
     <div>
       <Head>

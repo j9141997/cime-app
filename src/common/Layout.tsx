@@ -14,9 +14,9 @@ const Layout: FC<Props> = ({ children }) => {
       <Header />
       <Container
         as="main"
-        minH="calc(100vh - 88px)"
+        minH="calc(100vh - 7rem)"
         maxW={1200}
-        marginTop="4.5rem"
+        marginTop="5rem"
       >
         {children}
       </Container>
