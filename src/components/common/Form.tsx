@@ -19,13 +19,19 @@ const Form: FC<Props> = memo(function Form({
     <FormProvider {...methods}>
       <form onSubmit={methods.handleSubmit(onSubmit)}>
         {children}
-        <Box textAlign="end">
+        <Box textAlign="end" mt={2}>
           <NextLink href="/" passHref>
             <Button type="button" variant="link" marginRight={4}>
               キャンセル
             </Button>
           </NextLink>
-          <Button type="submit" variant="solid">
+          <Button
+            type="submit"
+            variant="solid"
+            color="white"
+            bgGradient="linear(to-l, #7928CA,#FF0080)"
+            _hover={{}}
+          >
             {submitButtonText ? submitButtonText : '保存する'}
           </Button>
         </Box>

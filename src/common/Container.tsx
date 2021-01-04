@@ -18,7 +18,7 @@ type Props = {
 const Container: FC<Props> = ({ children, breadcrumb = [], maxW }) => {
   const defaultMaxW = '60ch'
   return (
-    <Wrapper py={4} maxW={maxW || defaultMaxW}>
+    <Wrapper py={10} maxW={maxW || defaultMaxW}>
       {!!breadcrumb.length && (
         <Breadcrumb>
           {breadcrumb.map((item, i) => (

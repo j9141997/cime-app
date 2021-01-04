@@ -8,8 +8,10 @@ import {
   CloseButton,
   Flex,
   useToast,
+  Box,
 } from '@chakra-ui/react'
 import Form from '@components/common/Form'
+import Panel from '@components/common/Panel'
 import OptionInteractor from 'src/interactors/options/OptionInteractor'
 import { Option } from 'src/interactors/options/OptionMapper'
 import { Input } from '@components/common'
@@ -21,17 +23,25 @@ type ContainerProps = {
 }
 
 type Props = {
-  onClickAddField: (fieldName: 'merits' | 'demerits') => void
-  onClickRemoveField: (fieldName: 'merits' | 'demerits', index: number) => void
+  onClickAddOptionField: () => void
+  onClickRemoveOptionField: (i: number) => void
+  onClickAddField: (fieldName: 'merits' | 'demerits', i: number) => void
+  onClickRemoveField: (
+    fieldName: 'merits' | 'demerits',
+    i: number,
+    j: number
+  ) => void
   onSubmit: (data: any) => void
   indexes: {
     merits: number[]
     demerits: number[]
-  }
+  }[]
   submitting: boolean
 } & Omit<ContainerProps, 'method'>
 // for Web Designer
 const Component: VFC<Props> = ({
+  onClickAddOptionField,
+  onClickRemoveOptionField,
   onClickAddField,
   onClickRemoveField,
   onSubmit,
@@ -42,7 +52,7 @@ const Component: VFC<Props> = ({
   <Form submitting={submitting} onSubmit={onSubmit}>
     <VStack spacing={4}>
       <FormControl id="title" isRequired>
-        <FormLabel>タイトル</FormLabel>
+        <FormLabel fontWeight="bold">タイトル</FormLabel>
         <Input
           type="text"
           variant="unstyled"
@@ -53,54 +63,81 @@ const Component: VFC<Props> = ({
           autoFocus={true}
         />
       </FormControl>
-      <FormControl id="merits" isRequired>
-        <FormLabel>メリット</FormLabel>
-        <VStack spacing={1}>
-          {indexes.merits.map((i, _, array) => (
-            <Flex key={`merits${i}`} alignItems="center" w="100%">
-              <Input type="text" name={`merits[${i}]`} mr={1} />
-              <CloseButton
-                size="sm"
-                disabled={array.length < 2}
-                onClick={() => onClickRemoveField('merits', i)}
-              />
-            </Flex>
-          ))}
-        </VStack>
-        <Button
-          type="button"
-          mt={1}
-          size="xs"
-          onClick={() => onClickAddField('merits')}
+      {indexes.map((item, i) => (
+        <Panel
+          title={`選択肢 #${i + 1}`}
+          key={`option-${i}`}
+          onClose={() => onClickRemoveOptionField(i)}
+          disabled={indexes.length <= 1}
+          defaultIsExpanded={true}
         >
-          追加する
-        </Button>
-      </FormControl>
-      <FormControl id="demerits" isRequired>
-        <FormLabel>デメリット</FormLabel>
-        <VStack spacing={1}>
-          {indexes.demerits.map((i, _, array) => (
-            <Flex key={`demerits${i}`} alignItems="center" w="100%">
-              <Input type="text" name={`demerits[${i}]`} mr={1} />
-              <CloseButton
+          <VStack spacing={2}>
+            <FormControl id="options" isRequired>
+              <FormLabel fontWeight="bold">選択肢</FormLabel>
+              <Input type="text" name="optionName" mr={1} />
+            </FormControl>
+            <FormControl id="merits" isRequired>
+              <FormLabel fontWeight="bold">メリット</FormLabel>
+              <VStack spacing={1}>
+                {item.merits.map((j, _, array) => (
+                  <Flex key={`merits${j}`} alignItems="center" w="100%">
+                    <Input type="text" name={`merits[${j}]`} mr={1} />
+                    <CloseButton
+                      size="sm"
+                      disabled={array.length < 2}
+                      onClick={() => onClickRemoveField('merits', i, j)}
+                    />
+                  </Flex>
+                ))}
+              </VStack>
+              <Button
                 type="button"
-                size="sm"
-                disabled={array.length < 2}
-                onClick={() => onClickRemoveField('demerits', i)}
-              />
-            </Flex>
-          ))}
-        </VStack>
-        <Button
-          type="button"
-          mt={1}
-          size="xs"
-          onClick={() => onClickAddField('demerits')}
-        >
-          追加する
-        </Button>
-      </FormControl>
+                mt={1}
+                size="xs"
+                onClick={() => onClickAddField('merits', i)}
+              >
+                追加する
+              </Button>
+            </FormControl>
+            <FormControl id="demerits" isRequired>
+              <FormLabel fontWeight="bold">デメリット</FormLabel>
+              <VStack spacing={1}>
+                {item.demerits.map((j, _, array) => (
+                  <Flex key={`demerits${j}`} alignItems="center" w="100%">
+                    <Input type="text" name={`demerits[${j}]`} mr={1} />
+                    <CloseButton
+                      type="button"
+                      size="sm"
+                      disabled={array.length < 2}
+                      onClick={() => onClickRemoveField('demerits', i, j)}
+                    />
+                  </Flex>
+                ))}
+              </VStack>
+              <Button
+                type="button"
+                mt={1}
+                size="xs"
+                onClick={() => onClickAddField('demerits', i)}
+              >
+                追加する
+              </Button>
+            </FormControl>
+          </VStack>
+        </Panel>
+      ))}
     </VStack>
+    <Box w="100%">
+      <Button
+        type="button"
+        mt={1}
+        size="sm"
+        textAlign="start"
+        onClick={onClickAddOptionField}
+      >
+        選択肢を増やす
+      </Button>
+    </Box>
   </Form>
 )
 
@@ -110,45 +147,72 @@ const Container: VFC<ContainerProps> = ({ params, method }) => {
   const router = useRouter()
   const action = method === 'POST' ? 'post' : 'update'
   const [submitting, setSubmitting] = useState(false)
-  const [indexes, setIndexes] = useState({
-    merits: params.merits?.length ? params.merits.map((_, i) => i) : [0],
-    demerits: params.demerits?.length ? params.demerits.map((_, i) => i) : [0],
-  })
-  const [counter, setCounter] = useState({
-    merits: params.merits?.length || 1,
-    demerits: params.demerits?.length || 1,
-  })
+  const [indexes, setIndexes] = useState(
+    params.options.map((option) => ({
+      merits: option.merits?.length ? option.merits.map((_, j) => j) : [0],
+      demerits: option.demerits?.length
+        ? option.demerits.map((_, j) => j)
+        : [0],
+    }))
+  )
+  const [counter, setCounter] = useState(
+    params.options.length
+      ? params.options.map((option) => ({
+          merits: option.merits?.length || 1,
+          demerits: option.demerits?.length || 1,
+        }))
+      : [{ merits: 1, demerits: 1 }]
+  )
+
+  const handleAddOptionField = useCallback(() => {
+    const newIndexes = [].concat(indexes)
+    const newCounter = [].concat(counter)
+    newIndexes.push({ merits: [0], demerits: [0] })
+    counter.push({ merits: 1, demerits: 1 })
+    setIndexes(newIndexes)
+    setCounter(newCounter)
+  }, [counter, indexes])
+
+  const handleRemoveOptionField = useCallback(
+    (i) => {
+      const newValue = [].concat(indexes)
+      newValue.splice(i, 1)
+      setIndexes(newValue)
+    },
+    [indexes]
+  )
 
   const handleAddField: ComponentProps<
     typeof Component
   >['onClickAddField'] = useCallback(
-    (fieldName) => {
-      setIndexes((prevState) => {
-        return {
-          ...prevState,
-          [fieldName]: [...prevState[fieldName], counter[fieldName]],
-        }
-      })
+    (fieldName, i) => {
+      const newValue = [].concat(indexes)
+      newValue[i][fieldName].push(counter[fieldName])
+      setIndexes(newValue)
       setCounter((prevState) => ({
         ...prevState,
         [fieldName]: prevState[fieldName] + 1,
       }))
     },
-    [counter]
+    [counter, indexes]
   )
 
   const handleRemoveField: ComponentProps<
     typeof Component
-  >['onClickRemoveField'] = useCallback((fieldName, index) => {
-    setIndexes((prevState) => ({
-      ...prevState,
-      [fieldName]: prevState[fieldName].filter((item) => item !== index),
-    }))
-    setCounter((prevState) => ({
-      ...prevState,
-      [fieldName]: prevState[fieldName] - 1,
-    }))
-  }, [])
+  >['onClickRemoveField'] = useCallback(
+    (fieldName, i, j) => {
+      const newValue = Object.assign([], indexes)
+      newValue[i][fieldName] = newValue[i][fieldName].filter(
+        (num: number) => num !== j
+      )
+      setIndexes(newValue)
+      setCounter((prevState) => ({
+        ...prevState,
+        [fieldName]: prevState[fieldName] - 1,
+      }))
+    },
+    [indexes]
+  )
 
   const handleSubmit = useCallback(
     async (data) => {
@@ -179,11 +243,13 @@ const Container: VFC<ContainerProps> = ({ params, method }) => {
         })
       }
     },
-    [action, toast, router]
+    [action, params.id, toast, router]
   )
 
   return (
     <Component
+      onClickAddOptionField={handleAddOptionField}
+      onClickRemoveOptionField={handleRemoveOptionField}
       onClickAddField={handleAddField}
       onClickRemoveField={handleRemoveField}
       onSubmit={handleSubmit}
@@ -198,8 +264,12 @@ Container.defaultProps = {
   params: {
     id: '',
     title: '',
-    merits: [],
-    demerits: [],
+    options: [
+      {
+        merits: [],
+        demerits: [],
+      },
+    ],
   },
 }
 
