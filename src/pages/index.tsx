@@ -1,6 +1,6 @@
 import React from 'react'
 import { NextPage, GetServerSideProps } from 'next'
-import Head from 'next/head'
+import { NextSeo } from 'next-seo'
 import useSWR from 'swr'
 import { Flex } from '@chakra-ui/react'
 import OptionInteractor from 'src/interactors/options/OptionInteractor'
@@ -31,10 +31,7 @@ const HomePage: NextPage<Props> = ({ options = [] }) => {
 
   return (
     <div>
-      <Head>
-        <title>Create yoshida App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+      <NextSeo title="Cime --多くの選択肢を" />
       <Flex justify="space-between" css={{ flexWrap: 'wrap' }}>
         {data.map((option, i) => (
           <Card key={`option-${i}`} data={option} />

@@ -1,5 +1,10 @@
 import React, { VFC, memo } from 'react'
-import { SunIcon, MoonIcon } from '@chakra-ui/icons'
+import {
+  SunIcon,
+  MoonIcon,
+  ChevronDownIcon,
+  ChevronRightIcon,
+} from '@chakra-ui/icons'
 
 type Props = {
   name: string
@@ -8,11 +13,13 @@ type Props = {
 const iconMap = {
   SunIcon: SunIcon,
   MoonIcon: MoonIcon,
+  ChevronRightIcon: ChevronRightIcon,
+  ChevronDownIcon: ChevronDownIcon,
 }
 
-const Icon: VFC<Props> = memo(function Icon({ name }) {
+const Icon: VFC<Props> = ({ name, ...props }) => {
   const Icon = iconMap[name]
-  return <Icon />
-})
+  return <Icon {...props} />
+}
 
-export default Icon
+export default memo(Icon)
