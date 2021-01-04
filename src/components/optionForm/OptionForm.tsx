@@ -74,14 +74,18 @@ const Component: VFC<Props> = ({
           <VStack spacing={2}>
             <FormControl id="options" isRequired>
               <FormLabel fontWeight="bold">選択肢</FormLabel>
-              <Input type="text" name="optionName" mr={1} />
+              <Input type="text" name={`options.${i}.name`} mr={1} />
             </FormControl>
             <FormControl id="merits" isRequired>
               <FormLabel fontWeight="bold">メリット</FormLabel>
               <VStack spacing={1}>
                 {item.merits.map((j, _, array) => (
                   <Flex key={`merits${j}`} alignItems="center" w="100%">
-                    <Input type="text" name={`merits[${j}]`} mr={1} />
+                    <Input
+                      type="text"
+                      name={`options.${i}.merits.${j}`}
+                      mr={1}
+                    />
                     <CloseButton
                       size="sm"
                       disabled={array.length < 2}
@@ -104,7 +108,11 @@ const Component: VFC<Props> = ({
               <VStack spacing={1}>
                 {item.demerits.map((j, _, array) => (
                   <Flex key={`demerits${j}`} alignItems="center" w="100%">
-                    <Input type="text" name={`demerits[${j}]`} mr={1} />
+                    <Input
+                      type="text"
+                      name={`options.${i}.demerits.${j}`}
+                      mr={1}
+                    />
                     <CloseButton
                       type="button"
                       size="sm"
