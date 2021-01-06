@@ -34,7 +34,7 @@ const Layout: FC<Props> = ({ children }) => {
       <Header onOpen={handleOpen} />
 
       {!!modalComponent && (
-        <Modal isOpen={isOpen} onClose={onClose}>
+        <Modal isOpen={isOpen} onClose={onClose} scrollBehavior="inside">
           <ModalOverlay />
           {cloneElement(modalComponent, { onClose: handleClose })}
         </Modal>
