@@ -10,8 +10,7 @@ import {
   useToast,
   Box,
 } from '@chakra-ui/react'
-import ModalContent from '@components/common/ModalContent'
-import Form from '@components/common/Form'
+import ModalForm from '@components/common/ModalForm'
 import Panel from '@components/common/Panel'
 import OptionInteractor from 'src/interactors/options/OptionInteractor'
 import { Option } from 'src/interactors/options/OptionMapper'
@@ -33,7 +32,7 @@ type Props = {
     j: number
   ) => void
   onSubmit: (data: any) => void
-  onClose: () => void
+  onClose?: () => void
   indexes: {
     merits: number[]
     demerits: number[]
@@ -48,110 +47,114 @@ const Component: VFC<Props> = ({
   onClickAddField,
   onClickRemoveField,
   onSubmit,
+  onClose,
   indexes,
   submitting,
   params = {},
 }) => (
-  <ModalContent title="新規投稿">
-    <Form submitting={submitting} onSubmit={onSubmit}>
-      <VStack spacing={4}>
-        <FormControl id="title" isRequired>
-          <FormLabel fontWeight="bold">タイトル</FormLabel>
-          <Input
-            type="text"
-            variant="unstyled"
-            name="title"
-            defaultValue={params.title}
-            placeholder="Title..."
-            size="lg"
-            autoFocus={true}
-          />
-        </FormControl>
-        {indexes.map((item, i) => (
-          <Panel
-            title={`選択肢 #${i + 1}`}
-            key={`option-${i}`}
-            onClose={() => onClickRemoveOptionField(i)}
-            disabled={indexes.length <= 1}
-            defaultIsExpanded={true}
-          >
-            <VStack spacing={2}>
-              <FormControl id="options" isRequired>
-                <FormLabel fontWeight="bold">選択肢</FormLabel>
-                <Input type="text" name={`options.${i}.name`} mr={1} />
-              </FormControl>
-              <FormControl id="merits" isRequired>
-                <FormLabel fontWeight="bold">メリット</FormLabel>
-                <VStack spacing={1}>
-                  {item.merits.map((j, _, array) => (
-                    <Flex key={`merits${j}`} alignItems="center" w="100%">
-                      <Input
-                        type="text"
-                        name={`options.${i}.merits.${j}`}
-                        mr={1}
-                      />
-                      <CloseButton
-                        size="sm"
-                        disabled={array.length < 2}
-                        onClick={() => onClickRemoveField('merits', i, j)}
-                      />
-                    </Flex>
-                  ))}
-                </VStack>
-                <Button
-                  type="button"
-                  mt={1}
-                  size="xs"
-                  onClick={() => onClickAddField('merits', i)}
-                >
-                  追加する
-                </Button>
-              </FormControl>
-              <FormControl id="demerits" isRequired>
-                <FormLabel fontWeight="bold">デメリット</FormLabel>
-                <VStack spacing={1}>
-                  {item.demerits.map((j, _, array) => (
-                    <Flex key={`demerits${j}`} alignItems="center" w="100%">
-                      <Input
-                        type="text"
-                        name={`options.${i}.demerits.${j}`}
-                        mr={1}
-                      />
-                      <CloseButton
-                        type="button"
-                        size="sm"
-                        disabled={array.length < 2}
-                        onClick={() => onClickRemoveField('demerits', i, j)}
-                      />
-                    </Flex>
-                  ))}
-                </VStack>
-                <Button
-                  type="button"
-                  mt={1}
-                  size="xs"
-                  onClick={() => onClickAddField('demerits', i)}
-                >
-                  追加する
-                </Button>
-              </FormControl>
-            </VStack>
-          </Panel>
-        ))}
-      </VStack>
-      <Box w="100%">
-        <Button
-          type="button"
-          mt={1}
-          size="sm"
-          textAlign="start"
-          onClick={onClickAddOptionField}
+  <ModalForm
+    title="新規投稿"
+    submitting={submitting}
+    onSubmit={onSubmit}
+    onClose={onClose}
+  >
+    <VStack spacing={4}>
+      <FormControl id="title" isRequired>
+        <FormLabel fontWeight="bold">タイトル</FormLabel>
+        <Input
+          type="text"
+          variant="unstyled"
+          name="title"
+          defaultValue={params.title}
+          placeholder="Title..."
+          size="lg"
+          autoFocus={true}
+        />
+      </FormControl>
+      {indexes.map((item, i) => (
+        <Panel
+          title={`選択肢 #${i + 1}`}
+          key={`option-${i}`}
+          onClose={() => onClickRemoveOptionField(i)}
+          disabled={indexes.length <= 1}
+          defaultIsExpanded={true}
         >
-          選択肢を増やす
-        </Button>
-      </Box>
-    </Form>
-  </ModalContent>
+          <VStack spacing={2}>
+            <FormControl id="options" isRequired>
+              <FormLabel fontWeight="bold">選択肢</FormLabel>
+              <Input type="text" name={`options.${i}.name`} mr={1} />
+            </FormControl>
+            <FormControl id="merits" isRequired>
+              <FormLabel fontWeight="bold">メリット</FormLabel>
+              <VStack spacing={1}>
+                {item.merits.map((j, _, array) => (
+                  <Flex key={`merits${j}`} alignItems="center" w="100%">
+                    <Input
+                      type="text"
+                      name={`options.${i}.merits.${j}`}
+                      mr={1}
+                    />
+                    <CloseButton
+                      size="sm"
+                      disabled={array.length < 2}
+                      onClick={() => onClickRemoveField('merits', i, j)}
+                    />
+                  </Flex>
+                ))}
+              </VStack>
+              <Button
+                type="button"
+                mt={1}
+                size="xs"
+                onClick={() => onClickAddField('merits', i)}
+              >
+                追加する
+              </Button>
+            </FormControl>
+            <FormControl id="demerits" isRequired>
+              <FormLabel fontWeight="bold">デメリット</FormLabel>
+              <VStack spacing={1}>
+                {item.demerits.map((j, _, array) => (
+                  <Flex key={`demerits${j}`} alignItems="center" w="100%">
+                    <Input
+                      type="text"
+                      name={`options.${i}.demerits.${j}`}
+                      mr={1}
+                    />
+                    <CloseButton
+                      type="button"
+                      size="sm"
+                      disabled={array.length < 2}
+                      onClick={() => onClickRemoveField('demerits', i, j)}
+                    />
+                  </Flex>
+                ))}
+              </VStack>
+              <Button
+                type="button"
+                mt={1}
+                size="xs"
+                onClick={() => onClickAddField('demerits', i)}
+              >
+                追加する
+              </Button>
+            </FormControl>
+          </VStack>
+        </Panel>
+      ))}
+    </VStack>
+    <Box w="100%">
+      <Button
+        type="button"
+        mt={1}
+        size="sm"
+        textAlign="start"
+        onClick={onClickAddOptionField}
+      >
+        選択肢を増やす
+      </Button>
+    </Box>
+  </ModalForm>
 )
 
 // for Frontend Developer
