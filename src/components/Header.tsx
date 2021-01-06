@@ -10,8 +10,13 @@ import {
 } from '@chakra-ui/react'
 import routes from 'routes'
 import Icon from '@components/common/Icon'
+import { OptionForm } from '@components/optionForm'
 
-export const Header: VFC = () => {
+type Props = {
+  onOpen: (component: JSX.Element) => void
+}
+
+export const Header: VFC<Props> = ({ onOpen }) => {
   const { colorMode, toggleColorMode } = useColorMode()
   const bg = useColorModeValue('white', 'gray.800')
   return (
@@ -43,9 +48,12 @@ export const Header: VFC = () => {
           <Button type="button" marginRight="0.5rem" onClick={toggleColorMode}>
             <Icon name={colorMode === 'light' ? 'SunIcon' : 'MoonIcon'} />
           </Button>
-          <NextLink href={routes.options.new} passHref>
-            <Button>New</Button>
-          </NextLink>
+          <Button
+            type="button"
+            onClick={() => onOpen(<OptionForm method="POST" />)}
+          >
+            New
+          </Button>
         </Box>
       </Flex>
     </Box>

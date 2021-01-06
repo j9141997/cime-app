@@ -19,7 +19,7 @@ const Form: FC<Props> = memo(function Form({
     <FormProvider {...methods}>
       <form onSubmit={methods.handleSubmit(onSubmit)}>
         {children}
-        <Box textAlign="end" mt={2}>
+        <Box textAlign="end" py={4}>
           <NextLink href="/" passHref>
             <Button type="button" variant="link" marginRight={4}>
               キャンセル
