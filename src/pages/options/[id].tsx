@@ -36,6 +36,19 @@ const OptionPage: NextPage<Props> = ({ option }) => {
       <NextLink href={routes.options.edit(data.id)}>削除</NextLink>
       <h1>{data.title}</h1>
       <p>{data.id}</p>
+      <div>
+        {data.options.map((option, i) => (
+          <div key={`option-${i}`}>
+            <p>{option.name}</p>
+            {option.merits.map((merit, j) => (
+              <p key={`merit-${j}`}>{merit}</p>
+            ))}
+            {option.demerits.map((demerit, j) => (
+              <p key={`demerit-${j}`}>{demerit}</p>
+            ))}
+          </div>
+        ))}
+      </div>
     </Container>
   )
 }
