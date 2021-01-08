@@ -1,6 +1,7 @@
 import React, { VFC, memo } from 'react'
 import NextLink from 'next/link'
 import { Box, Flex, Avatar, Heading, Text } from '@chakra-ui/react'
+import Author from '@components/Author'
 import routes from 'routes'
 
 type Props = {
@@ -20,8 +21,7 @@ const Card: VFC<Props> = memo(function ItemPanel({ data }) {
       cursor="pointer"
     >
       <Flex align="center" px={4} pt={4}>
-        <Avatar size="xs" mr={2} />
-        <Text fontSize="sm">Anonymous</Text>
+        <Author />
       </Flex>
       <NextLink href={routes.options.show(data.id)}>
         <Box p={4}>

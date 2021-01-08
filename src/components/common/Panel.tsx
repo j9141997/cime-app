@@ -4,7 +4,6 @@ import {
   Box,
   Heading,
   Collapse,
-  useDisclosure,
   IconButton,
   CloseButton,
 } from '@chakra-ui/react'
@@ -15,6 +14,8 @@ type Props = {
   onClose?: () => void
   disabled?: boolean
   defaultIsExpanded?: boolean
+  heading?: string
+  expandable?: boolean
 }
 
 const Panel: FC<Props> = ({
@@ -23,33 +24,36 @@ const Panel: FC<Props> = ({
   onClose,
   disabled = false,
   defaultIsExpanded = false,
+  expandable = true,
 }) => {
   const [isExpanded, setExpanded] = useState(defaultIsExpanded)
   return (
-    <Box w="100%" borderWidth="1px" borderRadius="md" py={1} px={4}>
+    <Box w="100%" borderWidth="1px" borderRadius="md" p={4}>
       {!!title && (
         <Flex alignItems="center" justifyContent="space-between">
           <Flex alignItems="center">
             <Heading as="h3" size="sm">
               {title}
             </Heading>
-            <IconButton
-              aria-label="toggle expanded"
-              type="button"
-              onClick={() => setExpanded(!isExpanded)}
-              variant="ghost"
-              icon={
-                <Icon
-                  name={isExpanded ? 'ChevronDownIcon' : 'ChevronRightIcon'}
-                />
-              }
-            />
+            {expandable && (
+              <IconButton
+                aria-label="toggle expanded"
+                type="button"
+                onClick={() => setExpanded(!isExpanded)}
+                variant="ghost"
+                icon={
+                  <Icon
+                    name={isExpanded ? 'ChevronDownIcon' : 'ChevronRightIcon'}
+                  />
+                }
+              />
+            )}
           </Flex>
-          <CloseButton onClick={onClose} disabled={disabled} />
+          {!!onClose && <CloseButton onClick={onClose} disabled={disabled} />}
         </Flex>
       )}
-      <Collapse in={isExpanded} animateOpacity>
-        <Box>{children}</Box>
+      <Collapse in={!expandable || isExpanded} animateOpacity>
+        <Box pt={4}>{children}</Box>
       </Collapse>
     </Box>
   )
