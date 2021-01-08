@@ -283,6 +283,7 @@ Container.defaultProps = {
     title: '',
     options: [
       {
+        name: '',
         merits: [],
         demerits: [],
       },
