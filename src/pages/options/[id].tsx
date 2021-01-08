@@ -2,11 +2,24 @@ import React from 'react'
 import { NextPage, GetServerSideProps } from 'next'
 import NextLink from 'next/link'
 import useSWR from 'swr'
+import {
+  Box,
+  Divider,
+  Heading,
+  List,
+  ListItem,
+  ListIcon,
+  Stack,
+} from '@chakra-ui/react'
+import { SunIcon } from '@chakra-ui/icons'
+import Author from '@components/Author'
 import baseURL from 'src/utils/baseURL'
 import OptionInteractor from 'src/interactors/options/OptionInteractor'
 import { Option } from 'src/interactors/options/OptionMapper'
 import routes from 'routes'
 import Container from 'src/common/Container'
+import Panel from '@components/common/Panel'
+import { iconMap } from '@components/common/Icon'
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   const id = params?.id as string
@@ -32,21 +45,46 @@ const OptionPage: NextPage<Props> = ({ option }) => {
 
   return (
     <Container>
-      <NextLink href={routes.options.edit(data.id)}>編集</NextLink>
-      <NextLink href={routes.options.edit(data.id)}>削除</NextLink>
-      <h1>{data.title}</h1>
-      <p>{data.id}</p>
+      {/* <NextLink href={routes.options.edit(data.id)}>編集</NextLink>
+      <NextLink href={routes.options.edit(data.id)}>削除</NextLink> */}
+      <Heading as="h1" size="xl">
+        {data.title}
+      </Heading>
+      <Box mt={2}>
+        <Author />
+      </Box>
+      <Divider mt={4} mb={8} />
       <div>
         {data.options.map((option, i) => (
-          <div key={`option-${i}`}>
-            <p>{option.name}</p>
-            {option.merits.map((merit, j) => (
-              <p key={`merit-${j}`}>{merit}</p>
-            ))}
-            {option.demerits.map((demerit, j) => (
-              <p key={`demerit-${j}`}>{demerit}</p>
-            ))}
-          </div>
+          <Panel
+            key={`option-${i}`}
+            title={`${i + 1}: ${option.name}`}
+            defaultIsExpanded={true}
+          >
+            <Stack spacing={2}>
+              <Panel title="メリット" expandable={false}>
+                <List>
+                  {option.merits.map((merit, j) => (
+                    <ListItem key={`merit-${j}`}>
+                      <ListIcon as={iconMap.MdCheckCircle} color="green.500" />
+                      {merit}
+                    </ListItem>
+                  ))}
+                </List>
+              </Panel>
+
+              <Panel title="デメリット" expandable={false}>
+                <List>
+                  {option.demerits.map((demerit, j) => (
+                    <ListItem key={`demerit-${j}`}>
+                      <ListIcon as={iconMap.MdError} color="red.500" />
+                      {demerit}
+                    </ListItem>
+                  ))}
+                </List>
+              </Panel>
+            </Stack>
+          </Panel>
         ))}
       </div>
     </Container>

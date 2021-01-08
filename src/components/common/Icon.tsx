@@ -5,16 +5,19 @@ import {
   ChevronDownIcon,
   ChevronRightIcon,
 } from '@chakra-ui/icons'
+import { MdCheckCircle, MdError } from 'react-icons/md'
 
 type Props = {
   name: string
 }
 
-const iconMap = {
+export const iconMap = {
   SunIcon: SunIcon,
   MoonIcon: MoonIcon,
   ChevronRightIcon: ChevronRightIcon,
   ChevronDownIcon: ChevronDownIcon,
+  MdCheckCircle: MdCheckCircle,
+  MdError: MdError,
 }
 
 const Icon: VFC<Props> = ({ name, ...props }) => {
