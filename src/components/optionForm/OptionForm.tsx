@@ -18,7 +18,7 @@ import Input from '../Input'
 import routes from 'routes'
 
 type ContainerProps = {
-  params?: Option
+  params?: Omit<Option, 'createdAt' | 'updatedAt'>
   method: 'POST' | 'PUT'
 }
 
