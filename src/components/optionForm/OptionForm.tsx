@@ -184,7 +184,7 @@ const Container: VFC<ContainerProps> = ({ params, method, ...props }) => {
     const newIndexes = [].concat(indexes)
     const newCounter = [].concat(counter)
     newIndexes.push({ merits: [0], demerits: [0] })
-    counter.push({ merits: 1, demerits: 1 })
+    newCounter.push({ merits: 1, demerits: 1 })
     setIndexes(newIndexes)
     setCounter(newCounter)
   }, [counter, indexes])
