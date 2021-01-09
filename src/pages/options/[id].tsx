@@ -1,5 +1,6 @@
 import React from 'react'
 import { NextPage, GetServerSideProps } from 'next'
+import { NextSeo } from 'next-seo'
 import NextLink from 'next/link'
 import useSWR from 'swr'
 import {
@@ -8,13 +9,9 @@ import {
   List,
   ListItem,
   ListIcon,
-  IconButton,
+  Button,
   Stack,
   Flex,
-  Menu,
-  MenuList,
-  MenuItem,
-  MenuButton,
 } from '@chakra-ui/react'
 import Author from '@components/Author'
 import baseURL from 'src/utils/baseURL'
@@ -23,8 +20,8 @@ import { Option } from 'src/interactors/options/OptionMapper'
 import routes from 'routes'
 import Container from 'src/common/Container'
 import Panel from '@components/Panel'
-import Icon from '@components/Icon'
-import { iconMap } from '@components/Icon'
+import Icon, { iconMap } from '@components/Icon'
+import ModalForm from '@components/ModalForm'
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   const id = params?.id as string
@@ -40,7 +37,7 @@ type Props = {
   option: Option
 }
 
-const OptionPage: NextPage<Props> = ({ option }) => {
+const OptionPage: NextPage<Props> = ({ option, onOpen }) => {
   const initialData = option
   const { data, error } = useSWR<Option | null>(
     `${baseURL}/option/${option?.id}`,
@@ -50,20 +47,38 @@ const OptionPage: NextPage<Props> = ({ option }) => {
 
   return (
     <Container>
+      <NextSeo title={`${data.title} | Cime`} />
       <Heading as="h1" size="xl">
         {data.title}
       </Heading>
       <Flex justifyContent="space-between" mt={2}>
         <Author createdAt={data.createdAt} />
-        <Menu>
-          <MenuButton>
-            <Icon name={'ChevronDownIcon'} />
-          </MenuButton>
-          <MenuList>
-            <MenuItem>編集</MenuItem>
-            <MenuItem>削除</MenuItem>
-          </MenuList>
-        </Menu>
+        <Flex>
+          <Button
+            type="button"
+            size="xs"
+            mr={1}
+            leftIcon={<Icon name="EditIcon" />}
+          >
+            編集
+          </Button>
+          <Button
+            type="button"
+            size="xs"
+            leftIcon={<Icon name="DeleteIcon" />}
+            onClick={() =>
+              onOpen(
+                <ModalForm
+                  title="記事削除の確認"
+                  text="この記事を削除しますか？"
+                  submitButtonText="削除する"
+                />
+              )
+            }
+          >
+            削除
+          </Button>
+        </Flex>
       </Flex>
       <Divider mt={4} mb={8} />
       <div>

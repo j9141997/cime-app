@@ -25,7 +25,6 @@ const Layout: FC<Props> = ({ children }) => {
     onOpen()
   }
   const handleClose = (): void => {
-    setModalComponent(null)
     onClose()
   }
 
@@ -34,9 +33,17 @@ const Layout: FC<Props> = ({ children }) => {
       <Header onOpen={handleOpen} />
 
       {!!modalComponent && (
-        <Modal isOpen={isOpen} onClose={onClose} scrollBehavior="inside">
+        <Modal
+          isOpen={isOpen}
+          size="2xl"
+          onClose={onClose}
+          scrollBehavior="inside"
+        >
           <ModalOverlay />
-          {cloneElement(modalComponent, { onClose: handleClose })}
+          {cloneElement(modalComponent, {
+            onOpen: handleOpen,
+            onClose: handleClose,
+          })}
         </Modal>
       )}
 

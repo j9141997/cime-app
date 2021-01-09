@@ -13,10 +13,11 @@ import {
 
 type Props = {
   title: string
+  text?: string
   submitButtonText?: string
   onSubmit?: (data: any) => void
   submitting?: boolean
-  onClose: () => void
+  onClose?: () => void
 }
 const ModalForm: FC<Props> = memo(function Form({
   children,
@@ -25,6 +26,7 @@ const ModalForm: FC<Props> = memo(function Form({
   submitButtonText,
   submitting,
   title,
+  text,
 }) {
   const methods = useForm()
   return (
@@ -33,7 +35,7 @@ const ModalForm: FC<Props> = memo(function Form({
         <ModalContent>
           <ModalHeader>{title}</ModalHeader>
           <ModalCloseButton />
-          <ModalBody>{children}</ModalBody>
+          <ModalBody>{children ? children : text}</ModalBody>
           <ModalFooter>
             <Button
               type="button"
