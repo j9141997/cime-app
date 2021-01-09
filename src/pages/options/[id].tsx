@@ -35,6 +35,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
 
 type Props = {
   option: Option
+  onOpen: (component: JSX.Element) => void
 }
 
 const OptionPage: NextPage<Props> = ({ option, onOpen }) => {
