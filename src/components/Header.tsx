@@ -9,7 +9,7 @@ import {
   useColorModeValue,
 } from '@chakra-ui/react'
 import routes from 'routes'
-import Icon from '@components/common/Icon'
+import Icon from '@components/Icon'
 import { OptionForm } from '@components/optionForm'
 
 type Props = {

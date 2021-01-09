@@ -6,6 +6,8 @@ export type Option = {
     merits?: string[]
     demerits?: string[]
   }[]
+  createdAt: number
+  updatedAt: number
 }
 
 class OptionMapper {
@@ -13,6 +15,8 @@ class OptionMapper {
     id: result.uuid,
     title: result.title,
     options: result.options || [],
+    createdAt: result.createdAt,
+    updatedAt: result.updatedAt,
   })
 }
 

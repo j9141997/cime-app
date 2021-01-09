@@ -2,10 +2,10 @@ import React from 'react'
 import { NextPage, GetServerSideProps } from 'next'
 import { NextSeo } from 'next-seo'
 import useSWR from 'swr'
-import { Flex } from '@chakra-ui/react'
+import { Flex, Spinner } from '@chakra-ui/react'
 import OptionInteractor from 'src/interactors/options/OptionInteractor'
 import { Option } from 'src/interactors/options/OptionMapper'
-import Card from '@components/common/Card'
+import Card from '@components/Card'
 
 type Props = {
   options: Option[]
@@ -33,9 +33,11 @@ const HomePage: NextPage<Props> = ({ options = [] }) => {
     <div>
       <NextSeo title="Cime --多くの選択肢を" />
       <Flex justify="space-between" css={{ flexWrap: 'wrap' }}>
-        {data.map((option, i) => (
-          <Card key={`option-${i}`} data={option} />
-        ))}
+        {data.length ? (
+          data.map((option, i) => <Card key={`option-${i}`} data={option} />)
+        ) : (
+          <Spinner size="lg" speed="0.65s" />
+        )}
       </Flex>
     </div>
   )

@@ -3,7 +3,6 @@ import { NextPage, GetServerSideProps } from 'next'
 import NextLink from 'next/link'
 import useSWR from 'swr'
 import {
-  Box,
   Divider,
   Heading,
   List,
@@ -12,6 +11,10 @@ import {
   IconButton,
   Stack,
   Flex,
+  Menu,
+  MenuList,
+  MenuItem,
+  MenuButton,
 } from '@chakra-ui/react'
 import Author from '@components/Author'
 import baseURL from 'src/utils/baseURL'
@@ -19,9 +22,9 @@ import OptionInteractor from 'src/interactors/options/OptionInteractor'
 import { Option } from 'src/interactors/options/OptionMapper'
 import routes from 'routes'
 import Container from 'src/common/Container'
-import Panel from '@components/common/Panel'
-import Icon from '@components/common/Icon'
-import { iconMap } from '@components/common/Icon'
+import Panel from '@components/Panel'
+import Icon from '@components/Icon'
+import { iconMap } from '@components/Icon'
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   const id = params?.id as string
@@ -47,19 +50,20 @@ const OptionPage: NextPage<Props> = ({ option }) => {
 
   return (
     <Container>
-      {/* <NextLink href={routes.options.edit(data.id)}>編集</NextLink>
-      <NextLink href={routes.options.edit(data.id)}>削除</NextLink> */}
       <Heading as="h1" size="xl">
         {data.title}
       </Heading>
       <Flex justifyContent="space-between" mt={2}>
-        <Author />
-        <IconButton
-          aria-label="toggle expanded"
-          type="button"
-          variant="ghost"
-          icon={<Icon name={'ChevronDownIcon'} />}
-        />
+        <Author createdAt={data.createdAt} />
+        <Menu>
+          <MenuButton>
+            <Icon name={'ChevronDownIcon'} />
+          </MenuButton>
+          <MenuList>
+            <MenuItem>編集</MenuItem>
+            <MenuItem>削除</MenuItem>
+          </MenuList>
+        </Menu>
       </Flex>
       <Divider mt={4} mb={8} />
       <div>

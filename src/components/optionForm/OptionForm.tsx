@@ -10,11 +10,11 @@ import {
   useToast,
   Box,
 } from '@chakra-ui/react'
-import ModalForm from '@components/common/ModalForm'
-import Panel from '@components/common/Panel'
+import ModalForm from '@components/ModalForm'
+import Panel from '@components/Panel'
 import OptionInteractor from 'src/interactors/options/OptionInteractor'
 import { Option } from 'src/interactors/options/OptionMapper'
-import { Input } from '@components/common'
+import Input from '../Input'
 import routes from 'routes'
 
 type ContainerProps = {
