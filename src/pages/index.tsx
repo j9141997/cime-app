@@ -23,7 +23,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
 const HomePage: NextPage<Props> = ({ options = [] }) => {
   const initialData = options
   const baseURL = process.env.NEXT_PUBLIC_API_ENDOPOINT
-  const { data, error } = useSWR<Option[]>(
+  const { data } = useSWR(
     `${baseURL}/options`,
     () => new OptionInteractor().findAll(),
     { initialData }

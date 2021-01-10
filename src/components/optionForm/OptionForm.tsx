@@ -1,5 +1,4 @@
 import React, { memo, VFC, useState, useCallback, ComponentProps } from 'react'
-import { useRouter } from 'next/router'
 import {
   FormControl,
   FormLabel,
@@ -15,11 +14,11 @@ import Panel from '@components/Panel'
 import OptionInteractor from 'src/interactors/options/OptionInteractor'
 import { Option } from 'src/interactors/options/OptionMapper'
 import Input from '../Input'
-import routes from 'routes'
 
 type ContainerProps = {
   params?: Omit<Option, 'createdAt' | 'updatedAt'>
   method: 'POST' | 'PUT'
+  onClose?: () => void
 }
 
 type Props = {
@@ -38,7 +37,7 @@ type Props = {
     demerits: number[]
   }[]
   submitting: boolean
-} & Omit<ContainerProps, 'method'>
+} & ContainerProps
 
 // for Web Designer
 const Component: VFC<Props> = ({
@@ -51,9 +50,10 @@ const Component: VFC<Props> = ({
   indexes,
   submitting,
   params = {},
+  method,
 }) => (
   <ModalForm
-    title="新規投稿"
+    title={method === 'POST' ? '新規投稿' : '編集'}
     submitting={submitting}
     onSubmit={onSubmit}
     onClose={onClose}
@@ -82,7 +82,12 @@ const Component: VFC<Props> = ({
           <VStack spacing={2}>
             <FormControl id="options" isRequired>
               <FormLabel fontWeight="bold">選択肢</FormLabel>
-              <Input type="text" name={`options.${i}.name`} mr={1} />
+              <Input
+                type="text"
+                name={`options.${i}.name`}
+                defaultValue={params.options[i].name}
+                mr={1}
+              />
             </FormControl>
             <FormControl id="merits" isRequired>
               <FormLabel fontWeight="bold">メリット</FormLabel>
@@ -92,6 +97,7 @@ const Component: VFC<Props> = ({
                     <Input
                       type="text"
                       name={`options.${i}.merits.${j}`}
+                      defaultValue={params.options[i].merits[j]}
                       mr={1}
                     />
                     <CloseButton
@@ -119,6 +125,7 @@ const Component: VFC<Props> = ({
                     <Input
                       type="text"
                       name={`options.${i}.demerits.${j}`}
+                      defaultValue={params.options[i].demerits[j]}
                       mr={1}
                     />
                     <CloseButton
@@ -160,7 +167,6 @@ const Component: VFC<Props> = ({
 // for Frontend Developer
 const Container: VFC<ContainerProps> = ({ params, method, ...props }) => {
   const toast = useToast()
-  const router = useRouter()
   const action = method === 'POST' ? 'post' : 'update'
   const [submitting, setSubmitting] = useState(false)
   const [indexes, setIndexes] = useState(
@@ -246,7 +252,9 @@ const Container: VFC<ContainerProps> = ({ params, method, ...props }) => {
           status: 'success',
           isClosable: true,
         })
-        router.push(routes.root)
+        if (props.onClose) {
+          props.onClose()
+        }
       } catch (e) {
         console.error(e)
         setSubmitting(false)
@@ -259,7 +267,7 @@ const Container: VFC<ContainerProps> = ({ params, method, ...props }) => {
         })
       }
     },
-    [action, params.id, toast, router]
+    [action, params.id, toast, props]
   )
 
   return (
@@ -272,6 +280,7 @@ const Container: VFC<ContainerProps> = ({ params, method, ...props }) => {
       indexes={indexes}
       submitting={submitting}
       params={params}
+      method={method}
       {...props}
     />
   )

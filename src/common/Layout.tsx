@@ -49,13 +49,16 @@ const Layout: FC<Props> = ({ children }) => {
 
       <Container
         as="main"
-        minH="calc(100vh - 7rem)"
+        minH="calc(100vh - 8rem)"
         maxW={1200}
         marginTop="5rem"
       >
         {Children.map(children, (child) => {
           if (isValidElement(child)) {
-            return cloneElement(child, { onOpen: handleOpen })
+            return cloneElement(child, {
+              onOpen: handleOpen,
+              onClose: handleClose,
+            })
           }
           return child
         })}

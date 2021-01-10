@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { NextPage, GetServerSideProps } from 'next'
+import { useRouter } from 'next/router'
 import { NextSeo } from 'next-seo'
-import NextLink from 'next/link'
 import useSWR from 'swr'
 import {
   Divider,
@@ -12,16 +12,17 @@ import {
   Button,
   Stack,
   Flex,
+  useToast,
 } from '@chakra-ui/react'
 import Author from '@components/Author'
 import baseURL from 'src/utils/baseURL'
 import OptionInteractor from 'src/interactors/options/OptionInteractor'
 import { Option } from 'src/interactors/options/OptionMapper'
-import routes from 'routes'
 import Container from 'src/common/Container'
 import Panel from '@components/Panel'
 import Icon, { iconMap } from '@components/Icon'
 import ModalForm from '@components/ModalForm'
+import { OptionForm } from '@components/optionForm'
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   const id = params?.id as string
@@ -36,15 +37,20 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
 type Props = {
   option: Option
   onOpen: (component: JSX.Element) => void
+  onClose: () => void
 }
 
-const OptionPage: NextPage<Props> = ({ option, onOpen }) => {
+const OptionPage: NextPage<Props> = ({ option, onOpen, onClose }) => {
+  const router = useRouter()
+  const toast = useToast()
+  const OI = new OptionInteractor()
   const initialData = option
-  const { data, error } = useSWR<Option | null>(
+  const { data } = useSWR<Option | null>(
     `${baseURL}/option/${option?.id}`,
-    () => new OptionInteractor().findOne(option?.id),
+    () => OI.findOne(option?.id),
     { initialData }
   )
+  const [submitting, setSubmitting] = useState(false)
 
   return (
     <Container>
@@ -60,6 +66,7 @@ const OptionPage: NextPage<Props> = ({ option, onOpen }) => {
             size="xs"
             mr={1}
             leftIcon={<Icon name="EditIcon" />}
+            onClick={() => onOpen(<OptionForm params={data} method="PUT" />)}
           >
             編集
           </Button>
@@ -73,6 +80,26 @@ const OptionPage: NextPage<Props> = ({ option, onOpen }) => {
                   title="記事削除の確認"
                   text="この記事を削除しますか？"
                   submitButtonText="削除する"
+                  submitting={submitting}
+                  onSubmit={async () => {
+                    setSubmitting(true)
+                    try {
+                      await OI.remove(data.id)
+                      toast({
+                        position: 'bottom-left',
+                        title: 'Article Created!!',
+                        description: '選択肢の削除に成功しました。',
+                        status: 'success',
+                        isClosable: true,
+                      })
+                      onClose()
+                      router.push('/')
+                    } catch (e) {
+                      console.error(e)
+                      setSubmitting(false)
+                    }
+                  }}
+                  onClose={onClose}
                 />
               )
             }
