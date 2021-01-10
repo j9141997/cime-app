@@ -8,7 +8,7 @@ import {
   useColorMode,
   useColorModeValue,
 } from '@chakra-ui/react'
-import routes from 'routes'
+import routes from 'src/routes'
 import Icon from '@components/Icon'
 import { OptionForm } from '@components/optionForm'
 
