@@ -28,7 +28,7 @@ const Panel: FC<Props> = ({
 }) => {
   const [isExpanded, setExpanded] = useState(defaultIsExpanded)
   return (
-    <Box w="100%" borderWidth="1px" borderRadius="md" p={4}>
+    <Box w="100%" borderWidth="1px" borderRadius="md" p={3}>
       {!!title && (
         <Flex alignItems="center" justifyContent="space-between">
           <Flex alignItems="center">
@@ -53,7 +53,9 @@ const Panel: FC<Props> = ({
         </Flex>
       )}
       <Collapse in={!expandable || isExpanded} animateOpacity>
-        <Box pt={4}>{children}</Box>
+        <Box pt={4} px={1}>
+          {children}
+        </Box>
       </Collapse>
     </Box>
   )

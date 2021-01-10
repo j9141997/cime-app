@@ -12,8 +12,10 @@ import {
 import ModalForm from '@components/ModalForm'
 import Panel from '@components/Panel'
 import OptionInteractor from 'src/interactors/options/OptionInteractor'
+import OptionMapper from 'src/interactors/options/OptionMapper'
 import { Option } from 'src/interactors/options/OptionMapper'
 import Input from '../Input'
+import Select from '../shared/Select'
 
 type ContainerProps = {
   params?: Omit<Option, 'createdAt' | 'updatedAt'>
@@ -69,6 +71,14 @@ const Component: VFC<Props> = ({
           placeholder="Title..."
           size="lg"
           autoFocus={true}
+        />
+      </FormControl>
+      <FormControl id="category" isRequired>
+        <FormLabel fontWeight="bold">カテゴリ</FormLabel>
+        <Select
+          name="category"
+          defaultValue={params.category}
+          options={OptionMapper.CATEGORY_OPTIONS}
         />
       </FormControl>
       {indexes.map((item, i) => (
@@ -230,7 +240,7 @@ const Container: VFC<ContainerProps> = ({ params, method, ...props }) => {
       setIndexes(newValue)
       setCounter((prevState) => ({
         ...prevState,
-        [fieldName]: prevState[fieldName] - 1,
+        [fieldName]: prevState[fieldName] + 1,
       }))
     },
     [indexes]

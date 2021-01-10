@@ -42,6 +42,7 @@ type Props = {
 }
 
 const OptionPage: NextPage<Props> = ({ option, onOpen, onClose }) => {
+  console.log(option)
   const router = useRouter()
   const toast = useToast()
   const OI = new OptionInteractor()
@@ -56,6 +57,7 @@ const OptionPage: NextPage<Props> = ({ option, onOpen, onClose }) => {
   if (!data) {
     return <Error />
   }
+
   return (
     <Container>
       <NextSeo title={`${data.title} | Cime`} />
