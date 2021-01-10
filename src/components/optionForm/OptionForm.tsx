@@ -85,7 +85,7 @@ const Component: VFC<Props> = ({
               <Input
                 type="text"
                 name={`options.${i}.name`}
-                defaultValue={params.options[i].name}
+                defaultValue={params.options[i]?.name}
                 mr={1}
               />
             </FormControl>
@@ -97,7 +97,7 @@ const Component: VFC<Props> = ({
                     <Input
                       type="text"
                       name={`options.${i}.merits.${j}`}
-                      defaultValue={params.options[i].merits[j]}
+                      defaultValue={params.options[i]?.merits[j]}
                       mr={1}
                     />
                     <CloseButton
@@ -125,7 +125,7 @@ const Component: VFC<Props> = ({
                     <Input
                       type="text"
                       name={`options.${i}.demerits.${j}`}
-                      defaultValue={params.options[i].demerits[j]}
+                      defaultValue={params.options[i]?.demerits[j]}
                       mr={1}
                     />
                     <CloseButton

@@ -11,7 +11,7 @@ const ErrorBoundary: FC = ({ children }) => {
         children
       ) : (
         <Text>
-          誠に恐れ入れいますが、しばらくしてから再度アクセスをお試しください。
+          誠に恐れ入りますが、しばらくしてから再度アクセスをお試しください。
         </Text>
       )}
       <Button

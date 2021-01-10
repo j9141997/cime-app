@@ -14,6 +14,7 @@ import {
   Flex,
   useToast,
 } from '@chakra-ui/react'
+import Error from '@components/Error'
 import Author from '@components/Author'
 import baseURL from 'src/utils/baseURL'
 import OptionInteractor from 'src/interactors/options/OptionInteractor'
@@ -52,6 +53,9 @@ const OptionPage: NextPage<Props> = ({ option, onOpen, onClose }) => {
   )
   const [submitting, setSubmitting] = useState(false)
 
+  if (!data) {
+    return <Error />
+  }
   return (
     <Container>
       <NextSeo title={`${data.title} | Cime`} />
