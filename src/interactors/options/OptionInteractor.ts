@@ -16,23 +16,19 @@ class OptionInteractor {
   }
 
   findAll = async (): Promise<Option[] | null> => {
-    const res = await fetch(`${this.baseURL}/options`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-      .then((res) => res)
-      .catch((e) => {
-        throw Error(e)
-      })
     try {
+      const res = await fetch(`${this.baseURL}/options`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
       const body: BodyProps = await res.json()
       return (body.data.options || []).map((option: Option) =>
         OptionMapper.bodyToOption(option)
       )
     } catch (e) {
-      console.log(e)
+      handleErrors(e)
       return null
     }
   }
@@ -75,6 +71,20 @@ class OptionInteractor {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(params),
+    })
+      .catch((e) => {
+        throw Error(e)
+      })
+      .then(handleErrors)
+      .then((res) => res)
+  }
+
+  remove = async (id: string): Promise<any | Error> => {
+    await fetch(`${this.baseURL}/options/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
     })
       .catch((e) => {
         throw Error(e)

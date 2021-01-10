@@ -17,7 +17,7 @@ type Props = {
   submitButtonText?: string
   onSubmit?: (data: any) => void
   submitting?: boolean
-  onClose?: () => void
+  onClose: () => void
 }
 const ModalForm: FC<Props> = memo(function Form({
   children,
