@@ -7,7 +7,7 @@ import Container from 'src/common/Container'
 import { OptionForm } from '@components/optionForm'
 import OptionInteractor from 'src/interactors/options/OptionInteractor'
 import { Option } from 'src/interactors/options/OptionMapper'
-import routes from 'routes'
+import routes from 'src/routes'
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   const id = params?.id as string
