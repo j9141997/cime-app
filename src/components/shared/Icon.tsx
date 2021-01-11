@@ -6,11 +6,13 @@ import {
   ChevronRightIcon,
   DeleteIcon,
   EditIcon,
+  InfoIcon,
 } from '@chakra-ui/icons'
 import { MdCheckCircle, MdError } from 'react-icons/md'
 
 type Props = {
   name: string
+  fontSize?: string
 }
 
 export const iconMap = {
@@ -22,6 +24,7 @@ export const iconMap = {
   MdError: MdError,
   DeleteIcon: DeleteIcon,
   EditIcon: EditIcon,
+  InfoIcon: InfoIcon,
 }
 
 const Icon: VFC<Props> = ({ name, ...props }) => {

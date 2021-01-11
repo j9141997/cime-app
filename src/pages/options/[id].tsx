@@ -21,7 +21,7 @@ import OptionInteractor from 'src/interactors/options/OptionInteractor'
 import { Option } from 'src/interactors/options/OptionMapper'
 import Container from 'src/common/Container'
 import Panel from '@components/Panel'
-import Icon, { iconMap } from '@components/Icon'
+import Icon, { iconMap } from '@components/shared/Icon'
 import ModalForm from '@components/ModalForm'
 import { OptionForm } from '@components/optionForm'
 

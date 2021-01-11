@@ -7,7 +7,7 @@ import {
   IconButton,
   CloseButton,
 } from '@chakra-ui/react'
-import Icon from '@components/Icon'
+import { Icon } from '@components/shared'
 
 type Props = {
   title?: string

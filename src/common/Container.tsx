@@ -1,7 +1,7 @@
 import React, { FC } from 'react'
 import NextLink from 'next/link'
 import {
-  Container as Wrapper,
+  Box as Wrapper,
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbLink,
@@ -16,9 +16,9 @@ type Props = {
 }
 
 const Container: FC<Props> = ({ children, breadcrumb = [], maxW }) => {
-  const defaultMaxW = '60ch'
+  const defaultMaxW = '900px'
   return (
-    <Wrapper py={10} maxW={maxW || defaultMaxW}>
+    <Wrapper maxW={maxW || defaultMaxW} m="0 auto" py={8}>
       {!!breadcrumb.length && (
         <Breadcrumb>
           {breadcrumb.map((item, i) => (
