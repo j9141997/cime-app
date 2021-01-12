@@ -4,7 +4,6 @@ import { Box, Flex, Heading } from '@chakra-ui/react'
 import Author from '@components/Author'
 import routes from 'src/routes'
 import { Option } from 'src/interactors/options/OptionMapper'
-import UnDraw from '@components/UnDraw'
 
 type Props = {
   data: Option
@@ -13,10 +12,6 @@ type Props = {
 const Card: VFC<Props> = memo(function Card({ data }) {
   return (
     <Flex as="article" w="100%" mb={8} cursor="pointer">
-      <Box bg="gray.100" p={4} borderRadius={4} mr={4}>
-        <UnDraw />
-      </Box>
-
       <Box>
         <NextLink href={routes.options.show(data.id)}>
           <Box>
