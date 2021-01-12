@@ -3,7 +3,7 @@ import { Box, Flex, Heading, Text, useMediaQuery } from '@chakra-ui/react'
 import UnDraw from './shared/UnDraw'
 
 const Introduction: VFC = () => {
-  const [isLargerThan1280] = useMediaQuery('(min-width: 1280px)')
+  const [isLargerThan48em] = useMediaQuery('(min-width: 48em)')
   return (
     <Box mb={20}>
       <Box>
@@ -29,7 +29,7 @@ const Introduction: VFC = () => {
             <UnDraw name="ShareOpinion" />
           </Box>
         </Box>
-        {isLargerThan1280 && (
+        {isLargerThan48em && (
           <>
             <Box p={2}>
               <Text as="p" fontWeight="700" mb={2}>
