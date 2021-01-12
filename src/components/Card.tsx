@@ -11,7 +11,7 @@ type Props = {
 
 const Card: VFC<Props> = memo(function Card({ data }) {
   return (
-    <Flex as="article" w="100%" mb={8} cursor="pointer">
+    <Flex as="article" w={['100%', '48.5%']} mb={8} cursor="pointer">
       <Box>
         <NextLink href={routes.options.show(data.id)}>
           <Box>
