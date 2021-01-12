@@ -7,7 +7,7 @@ import Container from 'src/common/Container'
 import OptionInteractor from 'src/interactors/options/OptionInteractor'
 import { Option } from 'src/interactors/options/OptionMapper'
 import Card from '@components/Card'
-import { TabLayout, Tooltip, Icon } from '@components/shared'
+import { Tooltip, Icon } from '@components/shared'
 
 type Props = {
   options: Option[]
@@ -30,64 +30,29 @@ const IndexPage: NextPage<Props> = ({ options = [] }) => {
     () => new OptionInteractor().findAll(),
     { initialData }
   )
-  const tabs = [
-    {
-      key: 'business',
-      name: 'ビジネス',
-      Component: (
-        <Flex justify="space-between" css={{ flexWrap: 'wrap' }}>
-          {data.length ? (
-            data.map((option, i) => <Card key={`option-${i}`} data={option} />)
-          ) : (
-            <Heading as="h2">投稿がありません。</Heading>
-          )}
-        </Flex>
-      ),
-    },
-    {
-      key: 'lifestyle',
-      name: '暮らし',
-      Component: (
-        <Flex justify="space-between" css={{ flexWrap: 'wrap' }}>
-          {data.length ? (
-            data.map((option, i) => <Card key={`option-${i}`} data={option} />)
-          ) : (
-            <Heading as="h2">投稿がありません。</Heading>
-          )}
-        </Flex>
-      ),
-    },
-    {
-      key: 'others',
-      name: 'その他',
-      Component: (
-        <Flex justify="space-between" css={{ flexWrap: 'wrap' }}>
-          {data.length ? (
-            data.map((option, i) => <Card key={`option-${i}`} data={option} />)
-          ) : (
-            <Heading as="h2">投稿がありません。</Heading>
-          )}
-        </Flex>
-      ),
-    },
-  ]
 
   return (
     <Container>
       <NextSeo title="Cime --多くの選択肢を" />
       <Box>
-        <Flex alignItems="baseline">
+        <Flex alignItems="baseline" mb={4}>
           <Heading as="h2" size="lg" mr={1}>
             Article
           </Heading>
-          <Tooltip label="テストです。">
+          <Tooltip label="様々なユーザーが投稿した選択肢を見ることができます。">
             <Flex color="gray.400">
               <Icon name="InfoIcon" fontSize="sm" />
             </Flex>
           </Tooltip>
         </Flex>
 
-        <TabLayout tabs={tabs} />
+        <Flex justify="space-between" css={{ flexWrap: 'wrap' }}>
+          {data.length ? (
+            data.map((option, i) => <Card key={`option-${i}`} data={option} />)
+          ) : (
+            <Heading as="h2">投稿がありません。</Heading>
+          )}
+        </Flex>
       </Box>
     </Container>
   )
