@@ -1,4 +1,4 @@
-import React, { VFC } from 'react'
+import React, { VFC, memo } from 'react'
 import { Box, Flex, Heading, Text, useMediaQuery } from '@chakra-ui/react'
 import UnDraw from './shared/UnDraw'
 
@@ -54,4 +54,4 @@ const Introduction: VFC = () => {
   )
 }
 
-export default Introduction
+export default memo(Introduction)

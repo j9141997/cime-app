@@ -14,8 +14,8 @@ const images = {
 }
 
 const UnDraw: VFC<Props> = ({ name }) => {
-  const SVG = images[name]
-  return <SVG height={120} width={180} />
+  const Svg = images[name]
+  return <Svg height={120} width={180} />
 }
 
 export default UnDraw
