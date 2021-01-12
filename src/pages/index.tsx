@@ -3,6 +3,7 @@ import { NextPage, GetServerSideProps } from 'next'
 import { NextSeo } from 'next-seo'
 import useSWR from 'swr'
 import { Flex, Box, Heading } from '@chakra-ui/react'
+import Introduction from '@components/Introduction'
 import Container from 'src/common/Container'
 import OptionInteractor from 'src/interactors/options/OptionInteractor'
 import { Option } from 'src/interactors/options/OptionMapper'
@@ -34,6 +35,7 @@ const IndexPage: NextPage<Props> = ({ options = [] }) => {
   return (
     <Container>
       <NextSeo title="Cime --多くの選択肢を" />
+      <Introduction />
       <Box>
         <Flex alignItems="baseline" mb={4}>
           <Heading as="h2" size="lg" mr={1}>
