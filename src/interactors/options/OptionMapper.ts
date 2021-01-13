@@ -25,8 +25,12 @@ class OptionMapper {
   static get CATEGORY_OPTIONS(): { name: string; value: string }[] {
     return [
       {
+        name: 'ライフスタイル',
+        value: 'lifestyle',
+      },
+      {
         name: 'ビジネス',
-        value: 'bi',
+        value: 'business',
       },
       {
         name: 'その他',
