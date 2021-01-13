@@ -115,7 +115,7 @@ const OptionPage: NextPage<Props> = ({ option, onOpen, onClose }) => {
         </Flex>
       </Flex>
       <Divider mt={4} mb={8} />
-      <div>
+      <Stack spacing={4}>
         {data.options.map((option, i) => (
           <Panel
             key={`option-${i}`}
@@ -147,7 +147,7 @@ const OptionPage: NextPage<Props> = ({ option, onOpen, onClose }) => {
             </Stack>
           </Panel>
         ))}
-      </div>
+      </Stack>
     </Container>
   )
 }

@@ -15,7 +15,7 @@ import OptionInteractor from 'src/interactors/options/OptionInteractor'
 import OptionMapper from 'src/interactors/options/OptionMapper'
 import { Option } from 'src/interactors/options/OptionMapper'
 import Input from '../Input'
-import Select from '../shared/Select'
+import { Alert, Select } from '../shared'
 
 type ContainerProps = {
   params?: Omit<Option, 'createdAt' | 'updatedAt'>
