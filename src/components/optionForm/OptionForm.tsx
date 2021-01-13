@@ -1,9 +1,9 @@
-import React, { memo, VFC, useState, useCallback, ComponentProps } from 'react'
+import React, { VFC, useState, useCallback, ComponentProps } from 'react'
 import {
   FormControl,
   FormLabel,
   Button,
-  VStack,
+  Stack,
   CloseButton,
   Flex,
   useToast,
@@ -15,7 +15,7 @@ import OptionInteractor from 'src/interactors/options/OptionInteractor'
 import OptionMapper from 'src/interactors/options/OptionMapper'
 import { Option } from 'src/interactors/options/OptionMapper'
 import Input from '../Input'
-import { Alert, Select } from '../shared'
+import { Select } from '../shared'
 
 type ContainerProps = {
   params?: Omit<Option, 'createdAt' | 'updatedAt'>
@@ -42,7 +42,7 @@ type Props = {
 } & ContainerProps
 
 // for Web Designer
-const Component: VFC<Props> = ({
+const OptionComponent: VFC<Props> = ({
   onClickAddOptionField,
   onClickRemoveOptionField,
   onClickAddField,
@@ -60,7 +60,7 @@ const Component: VFC<Props> = ({
     onSubmit={onSubmit}
     onClose={onClose}
   >
-    <VStack spacing={4}>
+    <Stack spacing={4}>
       <FormControl id="title" isRequired>
         <FormLabel fontWeight="bold">タイトル</FormLabel>
         <Input
@@ -84,12 +84,13 @@ const Component: VFC<Props> = ({
       {indexes.map((item, i) => (
         <Panel
           title={`選択肢 #${i + 1}`}
+          titleSize="sm"
           key={`option-${i}`}
           onClose={() => onClickRemoveOptionField(i)}
           disabled={indexes.length <= 1}
           defaultIsExpanded={true}
         >
-          <VStack spacing={2}>
+          <Stack spacing={2}>
             <FormControl id="options" isRequired>
               <FormLabel fontWeight="bold">選択肢</FormLabel>
               <Input
@@ -101,7 +102,7 @@ const Component: VFC<Props> = ({
             </FormControl>
             <FormControl id="merits" isRequired>
               <FormLabel fontWeight="bold">メリット</FormLabel>
-              <VStack spacing={1}>
+              <Stack spacing={1}>
                 {item.merits.map((j, _, array) => (
                   <Flex key={`merits${j}`} alignItems="center" w="100%">
                     <Input
@@ -117,7 +118,7 @@ const Component: VFC<Props> = ({
                     />
                   </Flex>
                 ))}
-              </VStack>
+              </Stack>
               <Button
                 type="button"
                 mt={1}
@@ -129,7 +130,7 @@ const Component: VFC<Props> = ({
             </FormControl>
             <FormControl id="demerits" isRequired>
               <FormLabel fontWeight="bold">デメリット</FormLabel>
-              <VStack spacing={1}>
+              <Stack spacing={1}>
                 {item.demerits.map((j, _, array) => (
                   <Flex key={`demerits${j}`} alignItems="center" w="100%">
                     <Input
@@ -146,7 +147,7 @@ const Component: VFC<Props> = ({
                     />
                   </Flex>
                 ))}
-              </VStack>
+              </Stack>
               <Button
                 type="button"
                 mt={1}
@@ -156,10 +157,10 @@ const Component: VFC<Props> = ({
                 追加する
               </Button>
             </FormControl>
-          </VStack>
+          </Stack>
         </Panel>
       ))}
-    </VStack>
+    </Stack>
     <Box w="100%">
       <Button
         type="button"
@@ -175,7 +176,7 @@ const Component: VFC<Props> = ({
 )
 
 // for Frontend Developer
-const Container: VFC<ContainerProps> = ({ params, method, ...props }) => {
+const OptionContainer: VFC<ContainerProps> = ({ params, method, ...props }) => {
   const toast = useToast()
   const action = method === 'POST' ? 'post' : 'update'
   const [submitting, setSubmitting] = useState(false)
@@ -215,35 +216,33 @@ const Container: VFC<ContainerProps> = ({ params, method, ...props }) => {
   )
 
   const handleAddField: ComponentProps<
-    typeof Component
+    typeof OptionComponent
   >['onClickAddField'] = useCallback(
     (fieldName, i) => {
       const newValue = [].concat(indexes)
-      newValue[i][fieldName].push(counter[fieldName])
+      const newCounter = [].concat(counter)
+      newValue[i][fieldName].push(counter[i][fieldName])
+      newCounter[i][fieldName] = newCounter[i][fieldName] + 1
       setIndexes(newValue)
-      setCounter((prevState) => ({
-        ...prevState,
-        [fieldName]: prevState[fieldName] + 1,
-      }))
+      setCounter(newCounter)
     },
     [counter, indexes]
   )
 
   const handleRemoveField: ComponentProps<
-    typeof Component
+    typeof OptionComponent
   >['onClickRemoveField'] = useCallback(
     (fieldName, i, j) => {
       const newValue = Object.assign([], indexes)
+      const newCounter = [].concat(counter)
       newValue[i][fieldName] = newValue[i][fieldName].filter(
         (num: number) => num !== j
       )
+      newCounter[i][fieldName] = newCounter[i][fieldName] + 1
       setIndexes(newValue)
-      setCounter((prevState) => ({
-        ...prevState,
-        [fieldName]: prevState[fieldName] + 1,
-      }))
+      setCounter(newCounter)
     },
-    [indexes]
+    [counter, indexes]
   )
 
   const handleSubmit = useCallback(
@@ -281,7 +280,7 @@ const Container: VFC<ContainerProps> = ({ params, method, ...props }) => {
   )
 
   return (
-    <Component
+    <OptionComponent
       onClickAddOptionField={handleAddOptionField}
       onClickRemoveOptionField={handleRemoveOptionField}
       onClickAddField={handleAddField}
@@ -296,7 +295,7 @@ const Container: VFC<ContainerProps> = ({ params, method, ...props }) => {
   )
 }
 
-Container.defaultProps = {
+OptionContainer.defaultProps = {
   params: {
     id: '',
     title: '',
@@ -310,4 +309,4 @@ Container.defaultProps = {
   },
 }
 
-export default memo(Container)
+export default OptionContainer
