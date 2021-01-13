@@ -34,8 +34,6 @@ class OptionInteractor {
   }
 
   findOne = async (id: string): Promise<Option | null> => {
-    console.log('---------------')
-    console.log(id)
     const res = await fetch(`${this.baseURL}/options/${id}`, {
       method: 'GET',
       headers: {

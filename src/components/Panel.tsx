@@ -1,16 +1,10 @@
 import React, { FC, useState } from 'react'
-import {
-  Flex,
-  Box,
-  Heading,
-  Collapse,
-  IconButton,
-  CloseButton,
-} from '@chakra-ui/react'
+import { Flex, Box, Heading, Collapse, CloseButton } from '@chakra-ui/react'
 import { Icon } from '@components/shared'
 
 type Props = {
   title?: string
+  titleSize?: 'xs' | 'sm' | 'md' | 'lg'
   onClose?: () => void
   disabled?: boolean
   defaultIsExpanded?: boolean
@@ -21,6 +15,7 @@ type Props = {
 const Panel: FC<Props> = ({
   children,
   title,
+  titleSize = 'md',
   onClose,
   disabled = false,
   defaultIsExpanded = false,
@@ -37,7 +32,7 @@ const Panel: FC<Props> = ({
           cursor="pointer"
         >
           <Flex alignItems="center">
-            <Heading as="h3" size="sm" mr={1}>
+            <Heading as="h3" size={titleSize} mr={1}>
               {title}
             </Heading>
             {expandable && (

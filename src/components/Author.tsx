@@ -1,6 +1,7 @@
 import React, { VFC, memo } from 'react'
-import { Avatar, Flex, Box, Text } from '@chakra-ui/react'
-import { format } from 'date-fns'
+import NextLink from 'next/link'
+import { Avatar, Flex, Box, Text, Link } from '@chakra-ui/react'
+import { distanceToNow } from 'src/utils/formatTime'
 
 type Props = {
   name?: string
@@ -11,11 +12,12 @@ const Author: VFC<Props> = ({ name = 'Anonymous', createdAt }) => {
     <Flex alignItems="center">
       <Avatar size="sm" mr={2} />
       <Box>
-        <Text as="div" fontSize="xs">
-          {name}
-        </Text>
+        <NextLink href="/" passHref>
+          <Link fontSize="sm">{name}</Link>
+        </NextLink>
+
         <Text as="div" fontSize="xs" color="gray.500">
-          {format(new Date(createdAt), 'yyyy/MM/dd')}
+          {distanceToNow(new Date(createdAt)) + '前'}
         </Text>
       </Box>
     </Flex>
