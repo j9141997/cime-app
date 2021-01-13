@@ -5,10 +5,10 @@ import UnDraw from './shared/UnDraw'
 const Introduction: VFC = () => {
   const [isLargerThan48em] = useMediaQuery('(min-width: 48em)')
   return (
-    <Box mb={20}>
+    <Box mb={8}>
       <Box>
         <Heading as="h1">多くの選択肢を</Heading>
-        <Text my={4} fontWeight="600">
+        <Text mt={2} mb={4} fontWeight="600">
           自分の可能性を、選択肢を、可処分時間を最大化させる
         </Text>
       </Box>

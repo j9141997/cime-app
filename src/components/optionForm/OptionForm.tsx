@@ -55,7 +55,7 @@ const Component: VFC<Props> = ({
   method,
 }) => (
   <ModalForm
-    title={method === 'POST' ? '新規投稿' : '編集'}
+    title={method === 'POST' ? '選択肢を共有する' : '選択肢を編集する'}
     submitting={submitting}
     onSubmit={onSubmit}
     onClose={onClose}
