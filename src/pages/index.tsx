@@ -36,7 +36,7 @@ const IndexPage: NextPage<Props> = ({ options = [] }) => {
     <Container>
       <NextSeo title="Cime --多くの選択肢を" />
       <Introduction />
-      <Box>
+      <Box mb={8}>
         <Flex alignItems="baseline" mb={4}>
           <Heading as="h2" size="lg" mr={1}>
             Article
@@ -54,6 +54,24 @@ const IndexPage: NextPage<Props> = ({ options = [] }) => {
           ) : (
             <Heading as="h2">投稿がありません。</Heading>
           )}
+        </Flex>
+      </Box>
+      <Box>
+        <Flex alignItems="baseline" mb={4}>
+          <Heading as="h2" size="lg" mr={1}>
+            Brain Storming
+          </Heading>
+          <Tooltip label="様々なユーザーと意見を出し合う場です。">
+            <Flex color="gray.400">
+              <Icon name="InfoIcon" fontSize="sm" />
+            </Flex>
+          </Tooltip>
+        </Flex>
+
+        <Flex justify="space-between" css={{ flexWrap: 'wrap' }}>
+          <Heading as="h3" size="sm">
+            Coming Soon...
+          </Heading>
         </Flex>
       </Box>
     </Container>

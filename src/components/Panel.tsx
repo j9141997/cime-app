@@ -30,22 +30,19 @@ const Panel: FC<Props> = ({
   return (
     <Box w="100%" borderWidth="1px" borderRadius="md" p={3}>
       {!!title && (
-        <Flex alignItems="center" justifyContent="space-between">
+        <Flex
+          alignItems="center"
+          justifyContent="space-between"
+          onClick={() => setExpanded(!isExpanded)}
+          cursor="pointer"
+        >
           <Flex alignItems="center">
-            <Heading as="h3" size="sm">
+            <Heading as="h3" size="sm" mr={1}>
               {title}
             </Heading>
             {expandable && (
-              <IconButton
-                aria-label="toggle expanded"
-                type="button"
-                onClick={() => setExpanded(!isExpanded)}
-                variant="ghost"
-                icon={
-                  <Icon
-                    name={isExpanded ? 'ChevronDownIcon' : 'ChevronRightIcon'}
-                  />
-                }
+              <Icon
+                name={isExpanded ? 'ChevronDownIcon' : 'ChevronRightIcon'}
               />
             )}
           </Flex>
