@@ -21,6 +21,7 @@ type ContainerProps = {
   params?: Omit<Option, 'createdAt' | 'updatedAt'>
   method: 'POST' | 'PUT'
   onClose?: () => void
+  onSubmitSuccess?: () => void
 }
 
 type Props = {
@@ -263,6 +264,9 @@ const OptionContainer: VFC<ContainerProps> = ({ params, method, ...props }) => {
         })
         if (props.onClose) {
           props.onClose()
+        }
+        if (props.onSubmitSuccess) {
+          props.onSubmitSuccess()
         }
       } catch (e) {
         console.error(e)
