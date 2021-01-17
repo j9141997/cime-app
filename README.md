@@ -1,40 +1,42 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+##  サービス概要
+ヒトそれぞれの選択肢を共有するサービス。
+文章ではなく選択肢、選択メリット、選択デメリットのみを書き投稿。
+無駄な情報がないため、利用者が情報をフィルタリングすることなくサービスを閲覧、利用ができる。
 
-## Getting Started
+## 開発チーム
+- 1人
 
-First, run the development server:
+## 主な機能
+- 選択肢投稿
+- 選択肢一覧表示・詳細表示
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+## サービス開発の目的
+- 個人開発による使用技術の幅を拡大
+- 外資系SNSを含め、写真特化、文字数制限など多くの人が利用するサービスには無駄なものを削ぎ落とし、利用者の自由が限られた状態にするものが多いと考えた。よって、選択肢のみのサービスがあっても良いのではないかと考え、開発に至る。
 
-## Deploy
+## サービスアーキテクチャ図
+![Cime_architecture](https://user-images.githubusercontent.com/50947613/104549959-28c49180-5677-11eb-8276-180f45610a27.png)
 
-```bash
-serverless
-```
+## 使用技術
+### アーキテクチャ
+「アジリティ」「コスト最適化」「スモール構成」「開発スピード」をテーマ設定。
+フロントエンドバックエンドどちらともサーバーレスにすることでインフラ周りの管理を極限に抑えつつ、アプリケーション開発に注力できるような環境づくりを目指した。
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 言語
+「アジリティ」「開発スピード」の観点からフロントエンド、バックエンドどちらも`TypeScript`を採用。静的型付けによる入力補完の恩恵を受けつつ、ドキュメントとしての側面を持つため、どんなデータをpropsに渡せば良いかが一目で理解でき、開発効率が上がると考える。また、突然の仕様変更にもコンパイル時にエラーチェックができる。
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+### フロントエンド
+TypeScriptと相性の良い`React.js`を採用。また、「開発スピード」「スモール構成」という観点から、ルーティング、SSRなど必要かつ面倒な実装を`No Config`で実現できるフロントエンドフレームワークとして`Next.js`を採用。
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+### フロントエンドデプロイ
+「コスト最適化」という観点から`S3 Hosting + CloudFront`を採用。無料枠があり、この構成であれば従量課金制のためコストを最小限に抑えられる。Next.jsによるSSRはLambda@edgeで行う。これら設定は`ServerlessFramework`を用いることでコードベースでの設定が可能。
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+### バックエンド(API)デプロイ
+`API Gateway + Lambda(REST)` によるサーバーレスアーキテクチャを採用。 「アジリティ」「開発スピード」の観点から、インフラ周りの管理を極限に抑えつつ、アプリケーション開発に注力できるような構成を`ServerlessFramework`を用いて構築。
 
-## Learn More
+## 工夫した点
+### InteractorとMapperのよるデータアクセス層の構築
+InteractorはAPI側からデータを取得する層である。それを各エンドポイントに用意することで、新たにエンドポイントが追加された場合、Interactorを追加するだけで対応でき、仕様追加に対する変更が可能。
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/import?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## スクリーンショット
+<img width="596" alt="スクリーンショット 2021-01-06 8 18 16" src="https://user-images.githubusercontent.com/50947613/103710183-bd841b00-4ff7-11eb-859f-0a59a1b2ddfb.png">
