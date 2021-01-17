@@ -8,8 +8,9 @@ const Introduction: VFC = () => {
     <Box mb={8}>
       <Box>
         <Heading as="h1">多くの選択肢を</Heading>
-        <Text mt={2} mb={4} fontWeight="600">
-          自分の可能性を、選択肢を、可処分時間を最大化させる
+        <Text mt={2} mb={4}>
+          「自分の可能性を、選択肢を、可処分時間を最大化させる」
+          をコンセプトとした情報共有コミュニティです。
         </Text>
       </Box>
       <Flex
