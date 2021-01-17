@@ -22,6 +22,7 @@ type Props = {
   onOpen: (component: JSX.Element) => void
   onClose: () => void
   onSubmit: (bool: boolean) => void
+  onSubmitSuccess: () => void
   submitting: boolean
 }
 
@@ -30,6 +31,7 @@ const OptionPresenter: VFC<Props> = ({
   onOpen,
   onClose,
   onSubmit,
+  onSubmitSuccess,
   submitting,
 }) => (
   <Container>
@@ -44,7 +46,15 @@ const OptionPresenter: VFC<Props> = ({
           size="xs"
           mr={1}
           leftIcon={<Icon name="EditIcon" />}
-          onClick={() => onOpen(<OptionForm params={data} method="PUT" />)}
+          onClick={() =>
+            onOpen(
+              <OptionForm
+                params={data}
+                method="PUT"
+                onSubmitSuccess={onSubmitSuccess}
+              />
+            )
+          }
         >
           編集
         </Button>

@@ -27,14 +27,19 @@ type Props = { initialData: Option } & Omit<
 
 const OptionPage: NextPage<Props> = ({ initialData, ...props }) => {
   const [submitting, setSubmitting] = useState(false)
+  const key = `${baseURL}/option/${initialData?.id}`
   const router = useRouter()
   const toast = useToast()
   const OI = new OptionInteractor()
-  const { data } = useSWR<Option | null>(
-    `${baseURL}/option/${initialData?.id}`,
+  const { data, mutate } = useSWR<Option | null>(
+    key,
     () => OI.findOne(initialData?.id),
     { initialData }
   )
+
+  const handleSubmitSuccess = () => {
+    mutate()
+  }
 
   const handleRemoveSubmit = async () => {
     try {
@@ -59,6 +64,7 @@ const OptionPage: NextPage<Props> = ({ initialData, ...props }) => {
     toast,
     submitting,
     onSubmit: handleRemoveSubmit,
+    onSubmitSuccess: handleSubmitSuccess,
     ...props,
   }
 
