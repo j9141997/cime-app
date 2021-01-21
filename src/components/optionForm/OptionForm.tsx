@@ -1,4 +1,5 @@
 import React, { VFC, useState, useCallback, ComponentProps } from 'react'
+import { useRouter } from 'next/router'
 import {
   FormControl,
   FormLabel,
@@ -9,18 +10,16 @@ import {
   useToast,
   Box,
 } from '@chakra-ui/react'
-import ModalForm from '@components/ModalForm'
 import Panel from '@components/Panel'
 import OptionInteractor from 'src/interactors/options/OptionInteractor'
 import OptionMapper from 'src/interactors/options/OptionMapper'
 import { Option } from 'src/interactors/options/OptionMapper'
-import Input from '../Input'
-import { Select } from '../shared'
+import { Select, Form, Input } from '../shared'
+import routes from 'src/routes'
 
 type ContainerProps = {
   params?: Omit<Option, 'createdAt' | 'updatedAt'>
   method: 'POST' | 'PUT'
-  onClose?: () => void
   onSubmitSuccess?: () => void
 }
 
@@ -34,7 +33,6 @@ type Props = {
     j: number
   ) => void
   onSubmit: (data: any) => void
-  onClose?: () => void
   indexes: {
     merits: number[]
     demerits: number[]
@@ -49,18 +47,11 @@ const OptionComponent: VFC<Props> = ({
   onClickAddField,
   onClickRemoveField,
   onSubmit,
-  onClose,
   indexes,
   submitting,
   params = {},
-  method,
 }) => (
-  <ModalForm
-    title={method === 'POST' ? '選択肢を共有する' : '選択肢を編集する'}
-    submitting={submitting}
-    onSubmit={onSubmit}
-    onClose={onClose}
-  >
+  <Form submitting={submitting} onSubmit={onSubmit}>
     <Stack spacing={4}>
       <FormControl id="title" isRequired>
         <FormLabel fontWeight="bold">タイトル</FormLabel>
@@ -78,7 +69,7 @@ const OptionComponent: VFC<Props> = ({
         <FormLabel fontWeight="bold">カテゴリ</FormLabel>
         <Select
           name="category"
-          defaultValue={params.category}
+          defaultValue={params.category || ''}
           options={OptionMapper.CATEGORY_OPTIONS}
         />
       </FormControl>
@@ -173,11 +164,12 @@ const OptionComponent: VFC<Props> = ({
         選択肢を増やす
       </Button>
     </Box>
-  </ModalForm>
+  </Form>
 )
 
 // for Frontend Developer
 const OptionContainer: VFC<ContainerProps> = ({ params, method, ...props }) => {
+  const router = useRouter()
   const toast = useToast()
   const action = method === 'POST' ? 'post' : 'update'
   const [submitting, setSubmitting] = useState(false)
@@ -262,12 +254,10 @@ const OptionContainer: VFC<ContainerProps> = ({ params, method, ...props }) => {
           status: 'success',
           isClosable: true,
         })
-        if (props.onClose) {
-          props.onClose()
-        }
         if (props.onSubmitSuccess) {
           props.onSubmitSuccess()
         }
+        router.push(routes.root)
       } catch (e) {
         console.error(e)
         setSubmitting(false)
@@ -280,7 +270,7 @@ const OptionContainer: VFC<ContainerProps> = ({ params, method, ...props }) => {
         })
       }
     },
-    [action, params.id, toast, props]
+    [action, params.id, toast, props, router]
   )
 
   return (
