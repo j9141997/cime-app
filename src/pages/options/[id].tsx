@@ -8,7 +8,8 @@ import Error from '@components/Error'
 import baseURL from 'src/utils/baseURL'
 import OptionInteractor from 'src/interactors/options/OptionInteractor'
 import { Option } from 'src/interactors/options/OptionMapper'
-import OptionPresenter from '@components/options/OptionPresenter'
+import { OptionDetailPresenter } from '@components/pages/options/details'
+import routes from 'src/routes'
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   const id = params?.id as string
@@ -21,7 +22,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
 }
 
 type Props = { initialData: Option } & Omit<
-  ComponentProps<typeof OptionPresenter>,
+  ComponentProps<typeof OptionDetailPresenter>,
   'data'
 >
 
@@ -52,7 +53,7 @@ const OptionPage: NextPage<Props> = ({ initialData, ...props }) => {
         isClosable: true,
       })
       props.onClose()
-      router.push('/')
+      router.push(routes.root)
     } catch (e) {
       console.error(e)
       setSubmitting(false)
@@ -75,7 +76,7 @@ const OptionPage: NextPage<Props> = ({ initialData, ...props }) => {
   return (
     <>
       <NextSeo title={`${data.title} | Cime`} />
-      <OptionPresenter {...presenterProps} />
+      <OptionDetailPresenter {...presenterProps} />
     </>
   )
 }

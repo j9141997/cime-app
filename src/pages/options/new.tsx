@@ -2,7 +2,7 @@ import React from 'react'
 import { NextPage } from 'next'
 import { NextSeo } from 'next-seo'
 import Container from 'src/common/Container'
-import OptionForm from '@components/optionForm/OptionForm'
+import OptionForm from '@components/pages/options/forms/OptionForm'
 
 const NewPage: NextPage = () => {
   return (

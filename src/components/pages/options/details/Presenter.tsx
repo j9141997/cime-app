@@ -15,7 +15,6 @@ import Panel from '@components/Panel'
 import Icon, { iconMap } from '@components/shared/Icon'
 import ModalForm from '@components/ModalForm'
 import { Option } from 'src/interactors/options/OptionMapper'
-import { OptionForm } from '@components/optionForm'
 
 type Props = {
   data: Option
@@ -26,7 +25,7 @@ type Props = {
   submitting: boolean
 }
 
-const OptionPresenter: VFC<Props> = ({
+export const OptionDetailPresenter: VFC<Props> = ({
   data,
   onOpen,
   onClose,
@@ -46,15 +45,15 @@ const OptionPresenter: VFC<Props> = ({
           size="xs"
           mr={1}
           leftIcon={<Icon name="EditIcon" />}
-          onClick={() =>
-            onOpen(
-              <OptionForm
-                params={data}
-                method="PUT"
-                onSubmitSuccess={onSubmitSuccess}
-              />
-            )
-          }
+          // onClick={() =>
+          //   onOpen(
+          //     <OptionForm
+          //       params={data}
+          //       method="PUT"
+          //       onSubmitSuccess={onSubmitSuccess}
+          //     />
+          //   )
+          // }
         >
           編集
         </Button>
@@ -115,5 +114,3 @@ const OptionPresenter: VFC<Props> = ({
     </Stack>
   </Container>
 )
-
-export default OptionPresenter
