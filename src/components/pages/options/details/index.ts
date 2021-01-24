@@ -1,0 +1,1 @@
+export { OptionDetailPresenter } from './Presenter'

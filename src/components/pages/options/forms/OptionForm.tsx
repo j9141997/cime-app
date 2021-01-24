@@ -14,7 +14,7 @@ import Panel from '@components/Panel'
 import OptionInteractor from 'src/interactors/options/OptionInteractor'
 import OptionMapper from 'src/interactors/options/OptionMapper'
 import { Option } from 'src/interactors/options/OptionMapper'
-import { Select, Form, Input } from '../shared'
+import { Select, Form, Input } from '../../../shared'
 import routes from 'src/routes'
 
 type ContainerProps = {
