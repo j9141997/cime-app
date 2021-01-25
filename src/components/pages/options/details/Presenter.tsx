@@ -1,4 +1,5 @@
 import React, { VFC } from 'react'
+import NextLink from 'next/link'
 import {
   Divider,
   Heading,
@@ -15,11 +16,10 @@ import Panel from '@components/Panel'
 import Icon, { iconMap } from '@components/shared/Icon'
 import ModalForm from '@components/ModalForm'
 import { Option } from 'src/interactors/options/OptionMapper'
+import routes from 'src/routes'
 
 type Props = {
   data: Option
-  onOpen: (component: JSX.Element) => void
-  onClose: () => void
   onSubmit: (bool: boolean) => void
   onSubmitSuccess: () => void
   submitting: boolean
@@ -27,8 +27,6 @@ type Props = {
 
 export const OptionDetailPresenter: VFC<Props> = ({
   data,
-  onOpen,
-  onClose,
   onSubmit,
   onSubmitSuccess,
   submitting,
@@ -40,23 +38,25 @@ export const OptionDetailPresenter: VFC<Props> = ({
     <Flex justifyContent="space-between" mt={2}>
       <Author createdAt={data.createdAt} />
       <Flex>
-        <Button
-          type="button"
-          size="xs"
-          mr={1}
-          leftIcon={<Icon name="EditIcon" />}
-          // onClick={() =>
-          //   onOpen(
-          //     <OptionForm
-          //       params={data}
-          //       method="PUT"
-          //       onSubmitSuccess={onSubmitSuccess}
-          //     />
-          //   )
-          // }
-        >
-          編集
-        </Button>
+        <NextLink href={routes.options.edit(data.id)}>
+          <Button
+            type="button"
+            size="xs"
+            mr={1}
+            leftIcon={<Icon name="EditIcon" />}
+            // onClick={() =>
+            //   onOpen(
+            //     <OptionForm
+            //       params={data}
+            //       method="PUT"
+            //       onSubmitSuccess={onSubmitSuccess}
+            //     />
+            //   )
+            // }
+          >
+            編集
+          </Button>
+        </NextLink>
         <Button
           type="button"
           size="xs"
