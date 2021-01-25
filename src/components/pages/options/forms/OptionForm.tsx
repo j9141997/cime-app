@@ -257,7 +257,9 @@ const OptionContainer: VFC<ContainerProps> = ({ params, method, ...props }) => {
         if (props.onSubmitSuccess) {
           props.onSubmitSuccess()
         }
-        router.push(routes.root)
+        router.push(
+          method === 'POST' ? routes.root : routes.options.show(params.id)
+        )
       } catch (e) {
         console.error(e)
         setSubmitting(false)
@@ -270,7 +272,7 @@ const OptionContainer: VFC<ContainerProps> = ({ params, method, ...props }) => {
         })
       }
     },
-    [action, params.id, toast, props, router]
+    [action, params.id, toast, props, router, method]
   )
 
   return (

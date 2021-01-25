@@ -52,7 +52,6 @@ const OptionPage: NextPage<Props> = ({ initialData, ...props }) => {
         status: 'success',
         isClosable: true,
       })
-      props.onClose()
       router.push(routes.root)
     } catch (e) {
       console.error(e)
