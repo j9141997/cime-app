@@ -7,12 +7,14 @@ type Props = {
   submitButtonText?: string
   onSubmit?: (data: any) => void
   submitting?: boolean
+  cancelHref?: string
 }
 const Form: FC<Props> = memo(function Form({
   children,
   onSubmit,
   submitButtonText,
   submitting,
+  cancelHref = '/',
 }) {
   const methods = useForm()
   return (
@@ -20,7 +22,7 @@ const Form: FC<Props> = memo(function Form({
       <form onSubmit={methods.handleSubmit(onSubmit)}>
         {children}
         <Box textAlign="end" py={4}>
-          <NextLink href="/" passHref>
+          <NextLink href={cancelHref} passHref>
             <Button type="button" variant="link" marginRight={4}>
               キャンセル
             </Button>

@@ -51,7 +51,11 @@ const OptionComponent: VFC<Props> = ({
   submitting,
   params = {},
 }) => (
-  <Form submitting={submitting} onSubmit={onSubmit}>
+  <Form
+    submitting={submitting}
+    onSubmit={onSubmit}
+    cancelHref={params.id ? routes.options.show(params.id) : routes.root}
+  >
     <Stack spacing={4}>
       <FormControl id="title" isRequired>
         <FormLabel fontWeight="bold">タイトル</FormLabel>
