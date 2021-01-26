@@ -4,7 +4,7 @@ import React, {
   cloneElement,
   Children,
   isValidElement,
-  ComponentProps,
+  ReactElement,
 } from 'react'
 import { Header } from '@components/Header'
 import { Footer } from '@components/Footer'
@@ -20,8 +20,8 @@ const Layout: FC<Props> = ({ children }) => {
   const [modalComponent, setModalComponent] = useState<JSX.Element | null>(null)
   const { isOpen, onOpen, onClose } = useDisclosure()
 
-  const handleOpen: ComponentProps<typeof Header>['onOpen'] = (component) => {
-    setModalComponent(component)
+  const handleOpen = (Component: ReactElement): void => {
+    setModalComponent(Component)
     onOpen()
   }
   const handleClose = (): void => {
@@ -30,7 +30,7 @@ const Layout: FC<Props> = ({ children }) => {
 
   return (
     <>
-      <Header onOpen={handleOpen} />
+      <Header />
 
       {!!modalComponent && (
         <Modal

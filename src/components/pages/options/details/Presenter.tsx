@@ -1,4 +1,4 @@
-import React, { VFC } from 'react'
+import React, { ReactElement, VFC } from 'react'
 import NextLink from 'next/link'
 import {
   Divider,
@@ -21,14 +21,16 @@ import routes from 'src/routes'
 type Props = {
   data: Option
   onSubmit: (bool: boolean) => void
-  onSubmitSuccess: () => void
+  onClose: () => void
+  onOpen: (Component: ReactElement) => void
   submitting: boolean
 }
 
 export const OptionDetailPresenter: VFC<Props> = ({
   data,
   onSubmit,
-  onSubmitSuccess,
+  onClose,
+  onOpen,
   submitting,
 }) => (
   <Container>
@@ -44,15 +46,6 @@ export const OptionDetailPresenter: VFC<Props> = ({
             size="xs"
             mr={1}
             leftIcon={<Icon name="EditIcon" />}
-            // onClick={() =>
-            //   onOpen(
-            //     <OptionForm
-            //       params={data}
-            //       method="PUT"
-            //       onSubmitSuccess={onSubmitSuccess}
-            //     />
-            //   )
-            // }
           >
             編集
           </Button>

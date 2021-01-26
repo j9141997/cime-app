@@ -32,7 +32,7 @@ const OptionEditPage: NextPage<Props> = ({ initialData }) => {
 
   return (
     <Container>
-      <NextSeo title="編集 |  | Cime" />
+      <NextSeo title={`編集 | ${data.title || '-'} | Cime`} />
       <OptionForm method="PUT" params={data} />
     </Container>
   )
