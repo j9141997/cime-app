@@ -1,5 +1,5 @@
 import React from 'react'
-import { NextPage, GetServerSideProps } from 'next'
+import { NextPage } from 'next'
 import { NextSeo } from 'next-seo'
 import useSWR from 'swr'
 import { Flex, Box, Heading } from '@chakra-ui/react'
@@ -11,16 +11,7 @@ import Card from '@components/Card'
 import { Tooltip, Icon } from '@components/shared'
 
 type Props = {
-  options: Option[]
-}
-
-export const getServerSideProps: GetServerSideProps = async () => {
-  const options = await new OptionInteractor().findAll()
-  return {
-    props: {
-      options,
-    },
-  }
+  options?: Option[]
 }
 
 const IndexPage: NextPage<Props> = ({ options = [] }) => {
@@ -76,6 +67,20 @@ const IndexPage: NextPage<Props> = ({ options = [] }) => {
       </Box>
     </Container>
   )
+}
+
+IndexPage.getInitialProps = async () => {
+  try {
+    const options = await new OptionInteractor().findAll()
+    return {
+      options,
+    }
+  } catch (err) {
+    const errorCode = err.response?.status || 500
+    return {
+      errorCode,
+    }
+  }
 }
 
 export default IndexPage
